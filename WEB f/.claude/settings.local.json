@@ -1,0 +1,19 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:api.anthropic.com)",
+      "Bash(curl -sL \"https://api.anthropic.com/v1/design/h/YsvCyhBpy8havWlVNIkGtQ\" -o \"/tmp/design.bin\")",
+      "Read(//tmp/**)",
+      "Read(//c/tmp/**)",
+      "Bash(cp \"C:/Users/santi/.claude/projects/C--Users-santi-Documents-Santiago-CD-proyectos-SPM-WEB/537886cc-1cc2-4738-adec-43fc6e5708f6/tool-results/webfetch-1776823730947-6i2pcz.bin\" design.gz)",
+      "Bash(gunzip -f design.gz)",
+      "Bash(mkdir -p /tmp/design-extract)",
+      "Bash(tar -xf /tmp/design -C /tmp/design-extract)",
+      "Bash(mkdir -p \"C:/Users/santi/Documents/Santiago/CD/proyectos/SPM/WEB/.design-ref\")",
+      "Bash(cp -r /tmp/design-extract/spm-web/* \"C:/Users/santi/Documents/Santiago/CD/proyectos/SPM/WEB/.design-ref/\")",
+      "Bash(python *)",
+      "Bash(git commit -m ' *)",
+      "Bash(git add *)"
+    ]
+  }
+}

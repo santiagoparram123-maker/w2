@@ -1,0 +1,441 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>SPM Advisory — Logo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<style>
+  :root {
+    --ink: #0A0A0A;
+    --ivory: #F7F5F0;
+    --gold: #C49A4A;
+    --gold-2: #B5863A;
+    --char: #2E2E2E;
+    --mute: #6B6B6B;
+    --line: rgba(10,10,10,0.10);
+  }
+  html, body { margin: 0; padding: 0; height: 100%; font-family: "Inter", Helvetica, Arial, sans-serif; }
+
+  .lg-wrap {
+    padding: 40px 44px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    justify-content: space-between;
+    height: 100%;
+    box-sizing: border-box;
+    background: var(--ivory);
+    color: var(--ink);
+  }
+  .lg-wrap.dark {
+    background: var(--ink);
+    color: var(--ivory);
+  }
+  .lg-meta {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--mute);
+    display: flex;
+    justify-content: space-between;
+  }
+  .lg-wrap.dark .lg-meta { color: rgba(247,245,240,0.55); }
+  .lg-body {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .caption {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--mute);
+  }
+  .lg-wrap.dark .caption { color: rgba(247,245,240,0.5); }
+
+  /* wordmark family */
+  .wm-stack {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
+  }
+  .wm-inline {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .wm {
+    font-weight: 500;
+    letter-spacing: -0.02em;
+  }
+  .wm .dot { color: var(--gold); }
+  .wm .italic {
+    font-family: "Instrument Serif", Georgia, serif;
+    font-style: italic;
+    font-weight: 400;
+    letter-spacing: -0.005em;
+  }
+  .divider-v {
+    width: 1px; height: 28px; background: currentColor; opacity: 0.3;
+  }
+
+  /* S-mark variants */
+  .s-mark {
+    display: grid;
+    place-items: center;
+    font-weight: 500;
+    font-size: 20px;
+    letter-spacing: -0.01em;
+  }
+
+  .s-box {
+    width: 72px; height: 72px;
+    border: 1.4px solid currentColor;
+    border-radius: 6px;
+    position: relative;
+  }
+  .s-box::after {
+    content: "";
+    position: absolute;
+    inset: 8px;
+    border-right: 1px solid currentColor;
+    border-bottom: 1px solid currentColor;
+    opacity: 0.38;
+  }
+  .s-box .letter { position: relative; z-index: 1; }
+  .s-box .letter .dot { color: var(--gold); }
+
+  .s-round {
+    width: 72px; height: 72px;
+    border: 1.4px solid currentColor;
+    border-radius: 50%;
+    position: relative;
+  }
+  .s-round::after {
+    content: "";
+    position: absolute;
+    top: 50%; left: 8px; right: 8px;
+    height: 1px;
+    background: currentColor;
+    opacity: 0.28;
+  }
+
+  .s-serif {
+    width: 72px; height: 72px;
+    background: var(--ink);
+    color: var(--ivory);
+    border-radius: 4px;
+    font-family: "Instrument Serif", Georgia, serif;
+    font-size: 44px;
+    font-style: italic;
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    padding-bottom: 4px;
+  }
+  .lg-wrap.dark .s-serif { background: var(--gold); color: var(--ink); }
+
+  .s-monogram {
+    width: 88px; height: 88px;
+    border: 1.5px solid currentColor;
+    border-radius: 6px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    gap: 0;
+    font-family: "Inter", sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+  }
+  .s-monogram div {
+    display: grid;
+    place-items: center;
+    border-right: 1px solid currentColor;
+    border-bottom: 1px solid currentColor;
+    opacity: 0.92;
+  }
+  .s-monogram div:nth-child(3n) { border-right: 0; }
+  .s-monogram div:nth-child(n+7) { border-bottom: 0; }
+  .s-monogram div.active { background: currentColor; opacity: 1; }
+  .s-monogram div.active span { color: var(--ivory); mix-blend-mode: difference; }
+  .s-monogram div.gold { color: var(--gold); }
+
+  .stroke-mark {
+    width: 72px; height: 72px;
+    position: relative;
+  }
+
+  .tag-caps {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10px;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--mute);
+  }
+  .lg-wrap.dark .tag-caps { color: rgba(247,245,240,0.55); }
+</style>
+</head>
+<body>
+
+<div id="root"></div>
+
+<script type="text/babel" src="design-canvas.jsx"></script>
+<script type="text/babel" data-presets="react">
+const { useState } = React;
+
+/* ───────── VARIANT 1 — Primary lockup: S-box + wordmark ───────── */
+function V1() {
+  return (
+    <div className="lg-wrap">
+      <div className="lg-meta"><span>01 / Primary lockup</span><span>Horizontal</span></div>
+      <div className="lg-body">
+        <div className="wm-inline">
+          <div className="s-mark s-box">
+            <span className="letter">S<span className="dot">.</span></span>
+          </div>
+          <div className="wm-stack">
+            <div className="wm" style={{fontSize: 34, lineHeight: 1}}>
+              SPM <span style={{opacity:0.35}}>·</span> <span className="italic">Advisory</span>
+            </div>
+            <div className="tag-caps" style={{marginTop:8}}>Sistemas operativos · ROI documentado</div>
+          </div>
+        </div>
+      </div>
+      <div className="caption">Recomendado · uso en header, documentos, firma ejecutiva</div>
+    </div>
+  );
+}
+
+/* ───────── VARIANT 2 — Stacked editorial ───────── */
+function V2() {
+  return (
+    <div className="lg-wrap">
+      <div className="lg-meta"><span>02 / Stacked</span><span>Editorial</span></div>
+      <div className="lg-body">
+        <div style={{textAlign:'center'}}>
+          <div style={{fontFamily:'"Instrument Serif", serif', fontStyle:'italic', fontSize: 88, lineHeight: 0.9, letterSpacing:'-0.035em'}}>
+            spm
+          </div>
+          <div style={{display:'flex', alignItems:'center', gap:12, justifyContent:'center', marginTop: 10}}>
+            <span style={{width:40, height:1, background:'currentColor', opacity:0.3}}></span>
+            <span className="tag-caps" style={{letterSpacing:'0.36em'}}>ADVISORY</span>
+            <span style={{width:40, height:1, background:'currentColor', opacity:0.3}}></span>
+          </div>
+          <div className="tag-caps" style={{marginTop: 18}}>EST · 2025 · MX</div>
+        </div>
+      </div>
+      <div className="caption">Uso: portadas, propuestas, presentaciones</div>
+    </div>
+  );
+}
+
+/* ───────── VARIANT 3 — Monogram grid (symbolic) ───────── */
+function V3() {
+  return (
+    <div className="lg-wrap dark">
+      <div className="lg-meta"><span>03 / Monogram</span><span>Symbol</span></div>
+      <div className="lg-body">
+        <div style={{display:'flex', alignItems:'center', gap: 24}}>
+          <div className="s-monogram">
+            <div className="active"><span>S</span></div>
+            <div></div>
+            <div className="gold"><span style={{color:'var(--gold)'}}>P</span></div>
+            <div></div>
+            <div><span>·</span></div>
+            <div></div>
+            <div className="gold"><span style={{color:'var(--gold)'}}>M</span></div>
+            <div></div>
+            <div className="active"><span>→</span></div>
+          </div>
+          <div>
+            <div className="wm" style={{fontSize: 26, lineHeight:1, letterSpacing:'-0.02em'}}>SPM Advisory</div>
+            <div className="tag-caps" style={{marginTop: 10, letterSpacing:'0.24em', color: 'var(--gold)'}}>OPERATING SYSTEMS FOR REVENUE</div>
+          </div>
+        </div>
+      </div>
+      <div className="caption">Marca gráfica. Uso: favicon, app icon, redes</div>
+    </div>
+  );
+}
+
+/* ───────── VARIANT 4 — Serif italic mark ───────── */
+function V4() {
+  return (
+    <div className="lg-wrap dark">
+      <div className="lg-meta"><span>04 / Italic mark</span><span>Premium</span></div>
+      <div className="lg-body">
+        <div className="wm-inline" style={{gap: 18}}>
+          <div className="s-mark s-serif">
+            <span style={{display:'inline-block', transform:'translateY(-2px)'}}>s</span>
+          </div>
+          <div className="wm-stack">
+            <div className="wm" style={{fontSize: 30, lineHeight:1, letterSpacing:'-0.025em'}}>
+              SPM Advisory
+            </div>
+            <div style={{marginTop: 8, display:'flex', alignItems:'center', gap: 10}}>
+              <span style={{fontFamily:'"Instrument Serif", serif', fontStyle:'italic', fontSize: 15, color:'var(--gold)'}}>revenue while you sleep</span>
+              <span style={{width: 14, height: 1, background:'var(--gold)', opacity: 0.6}}></span>
+              <span className="tag-caps" style={{color:'rgba(247,245,240,0.55)', letterSpacing:'0.2em'}}>MX · USA</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="caption">Uso: hero oscuro, materiales premium</div>
+    </div>
+  );
+}
+
+/* ───────── VARIANT 5 — Geometric strokemark ───────── */
+function V5() {
+  return (
+    <div className="lg-wrap">
+      <div className="lg-meta"><span>05 / Symbol only</span><span>Geometric</span></div>
+      <div className="lg-body">
+        <div style={{display:'flex', alignItems:'center', gap: 22}}>
+          <svg width="92" height="92" viewBox="0 0 92 92" fill="none">
+            {/* square */}
+            <rect x="4" y="4" width="84" height="84" rx="6" stroke="currentColor" strokeWidth="1.4"/>
+            {/* S path — three-stroke geometric S */}
+            <path d="M28 30 H62 M28 30 V46 H62 M62 46 V62 H28" stroke="currentColor" strokeWidth="3" strokeLinecap="square" strokeLinejoin="miter" fill="none"/>
+            {/* gold accent corner */}
+            <path d="M74 14 L78 14 L78 18" stroke="var(--gold)" strokeWidth="1.4"/>
+            <circle cx="76" cy="76" r="2.2" fill="var(--gold)"/>
+          </svg>
+          <div>
+            <div className="wm" style={{fontSize: 28, lineHeight:1, letterSpacing:'-0.02em'}}>SPM</div>
+            <div className="wm" style={{fontSize: 15, lineHeight:1, marginTop:6, letterSpacing:'0.02em', fontWeight:400, opacity:0.7}}>ADVISORY</div>
+          </div>
+        </div>
+      </div>
+      <div className="caption">Uso: sellos, membrete, favicon</div>
+    </div>
+  );
+}
+
+/* ───────── VARIANT 6 — Minimal monoline wordmark ───────── */
+function V6() {
+  return (
+    <div className="lg-wrap">
+      <div className="lg-meta"><span>06 / Minimal wordmark</span><span>No mark</span></div>
+      <div className="lg-body">
+        <div style={{textAlign:'left'}}>
+          <div style={{display:'flex', alignItems:'baseline', gap: 14}}>
+            <span style={{fontSize: 56, fontWeight: 500, letterSpacing:'-0.035em', lineHeight:1}}>SPM</span>
+            <span style={{width: 1, height: 36, background:'currentColor', opacity: 0.2, alignSelf:'center'}}></span>
+            <span style={{fontFamily:'"Instrument Serif", serif', fontStyle:'italic', fontWeight: 400, fontSize: 44, letterSpacing:'-0.01em', color:'var(--gold-2)'}}>Advisory</span>
+          </div>
+          <div className="tag-caps" style={{marginTop: 18, letterSpacing:'0.32em'}}>
+            BOUTIQUE · B2B · 2025
+          </div>
+        </div>
+      </div>
+      <div className="caption">Uso: emails, documentos, firma digital</div>
+    </div>
+  );
+}
+
+/* ───────── Favicon mini-grid ───────── */
+function Favs() {
+  return (
+    <div className="lg-wrap">
+      <div className="lg-meta"><span>Aplicaciones</span><span>Favicon · App icon · Seal</span></div>
+      <div className="lg-body">
+        <div style={{display:'flex', gap: 24, alignItems:'center'}}>
+          <div style={{display:'flex', flexDirection:'column', alignItems:'center', gap: 10}}>
+            <div style={{width: 64, height: 64, background:'var(--ink)', color:'var(--ivory)', borderRadius:12, display:'grid', placeItems:'center', fontWeight:500, fontSize:24, letterSpacing:'-0.02em'}}>
+              S<span style={{color:'var(--gold)'}}>.</span>
+            </div>
+            <span className="tag-caps">APP · 64</span>
+          </div>
+          <div style={{display:'flex', flexDirection:'column', alignItems:'center', gap: 10}}>
+            <div style={{width: 48, height: 48, background:'var(--gold)', color:'var(--ink)', borderRadius:10, display:'grid', placeItems:'center', fontWeight:500, fontSize:18, letterSpacing:'-0.02em'}}>
+              SPM
+            </div>
+            <span className="tag-caps">ACCENT · 48</span>
+          </div>
+          <div style={{display:'flex', flexDirection:'column', alignItems:'center', gap: 10}}>
+            <div style={{width: 32, height: 32, border:'1.2px solid var(--ink)', color:'var(--ink)', borderRadius:6, display:'grid', placeItems:'center', fontWeight:500, fontSize:13, letterSpacing:'-0.01em'}}>
+              S<span style={{color:'var(--gold)'}}>·</span>
+            </div>
+            <span className="tag-caps">FAV · 32</span>
+          </div>
+          <div style={{display:'flex', flexDirection:'column', alignItems:'center', gap: 10}}>
+            <div style={{width: 72, height: 72, background:'var(--ivory)', border:'1.5px solid var(--ink)', borderRadius:'50%', position:'relative', display:'grid', placeItems:'center', fontFamily:'"Instrument Serif", serif', fontStyle:'italic', fontSize: 34, letterSpacing:'-0.02em'}}>
+              spm
+              <span style={{position:'absolute', bottom: 8, left: 0, right: 0, textAlign:'center', fontFamily:'"JetBrains Mono", monospace', fontSize: 7, letterSpacing:'0.24em'}}>ADVISORY</span>
+            </div>
+            <span className="tag-caps">SEAL</span>
+          </div>
+        </div>
+      </div>
+      <div className="caption">Aplicaciones sistémicas</div>
+    </div>
+  );
+}
+
+/* ───────── Color system ───────── */
+function Colors() {
+  const swatches = [
+    { name: 'Ink', hex: '#0A0A0A', usage: 'Primario · backgrounds oscuros' },
+    { name: 'Ivory', hex: '#F7F5F0', usage: 'Secundario · backgrounds claros' },
+    { name: 'Gold', hex: '#C49A4A', usage: 'Acento · CTA · puntuación' },
+    { name: 'Charcoal', hex: '#2E2E2E', usage: 'Texto cuerpo · contornos' },
+  ];
+  return (
+    <div className="lg-wrap">
+      <div className="lg-meta"><span>Paleta</span><span>Hex oficial</span></div>
+      <div className="lg-body" style={{alignItems:'stretch'}}>
+        <div style={{display:'grid', gridTemplateColumns:'repeat(4, 1fr)', gap: 14, width:'100%'}}>
+          {swatches.map(s => (
+            <div key={s.name}>
+              <div style={{background: s.hex, height: 120, borderRadius: 6, border:'1px solid var(--line)'}}></div>
+              <div style={{marginTop: 10, fontWeight:500, fontSize: 14, letterSpacing:'-0.01em'}}>{s.name}</div>
+              <div className="tag-caps" style={{marginTop: 4, letterSpacing:'0.14em'}}>{s.hex}</div>
+              <div style={{fontSize: 11, color: 'var(--mute)', marginTop: 6, lineHeight: 1.4}}>{s.usage}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+      <div className="caption">Sistema cromático de marca</div>
+    </div>
+  );
+}
+
+function App() {
+  return (
+    <DesignCanvas>
+      <DCSection id="primary" title="SPM Advisory · Sistema de marca" subtitle="Logo boutique B2B · sistemas operativos de ingresos · Ink + Ivory + Gold">
+        <DCArtboard id="v1" label="01 · Primary lockup" width={700} height={420}><V1/></DCArtboard>
+        <DCArtboard id="v2" label="02 · Stacked editorial" width={560} height={420}><V2/></DCArtboard>
+        <DCArtboard id="v4" label="04 · Italic · dark" width={700} height={420}><V4/></DCArtboard>
+        <DCArtboard id="v6" label="06 · Minimal wordmark" width={620} height={420}><V6/></DCArtboard>
+      </DCSection>
+
+      <DCSection id="marks" title="Símbolos y aplicaciones" subtitle="Monogramas, favicons y selllos">
+        <DCArtboard id="v3" label="03 · Monogram · symbol" width={700} height={420}><V3/></DCArtboard>
+        <DCArtboard id="v5" label="05 · Geometric strokemark" width={560} height={420}><V5/></DCArtboard>
+        <DCArtboard id="fav" label="07 · Aplicaciones" width={720} height={420}><Favs/></DCArtboard>
+      </DCSection>
+
+      <DCSection id="system" title="Fundamentos" subtitle="Paleta, tipografía y reglas">
+        <DCArtboard id="col" label="Paleta cromática" width={820} height={420}><Colors/></DCArtboard>
+      </DCSection>
+    </DesignCanvas>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+</script>
+
+</body>
+</html>

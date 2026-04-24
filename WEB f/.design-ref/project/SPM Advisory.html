@@ -1,0 +1,765 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>SPM Advisory — Sistemas que generan ingresos mientras duermes</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<!-- Tweak defaults persisted via edit-mode -->
+<script>
+const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
+  "accent": "gold",
+  "heroMetric": "recovered",
+  "heroVariant": "A"
+}/*EDITMODE-END*/;
+</script>
+
+<!-- ============ NAV ============ -->
+<nav class="nav is-dark" id="nav">
+  <div class="wrap">
+    <a href="#" class="logo">
+      <span class="logo-mark" aria-hidden="true">
+        <i class="on"><span>S</span></i><i></i><i class="gold"><span>P</span></i>
+        <i></i><i><span>·</span></i><i></i>
+        <i class="gold"><span>M</span></i><i></i><i class="on"><span>→</span></i>
+      </span>
+      SPM <span class="dot">·</span> Advisory
+    </a>
+    <ul class="nav-links">
+      <li><a href="#problema">Diagnóstico</a></li>
+      <li><a href="#solucion">Sistema</a></li>
+      <li><a href="#industrias">Industrias</a></li>
+      <li><a href="#casos">Resultados</a></li>
+      <li><a href="#proceso">Proceso</a></li>
+    </ul>
+    <div class="nav-cta">
+      <a href="#auditoria" class="btn btn--gold">
+        Solicitar Auditoría <span class="arr">→</span>
+      </a>
+    </div>
+  </div>
+</nav>
+
+<!-- ============ HERO ============ -->
+<header class="hero" data-screen-label="01 Hero">
+  <div class="hero-bg">
+    <div class="hero-grid"></div>
+  </div>
+
+  <div class="wrap hero-inner">
+    <!-- LEFT: copy -->
+    <div class="hero-copy">
+      <span class="eyebrow" data-reveal>OPERACIONES · AUTOMATIZACIÓN · ROI</span>
+      <h1 class="hero-headline h-display" data-reveal id="heroHeadline">
+        Instalamos el sistema operativo que genera ingresos <em>mientras el dueño duerme.</em>
+      </h1>
+      <p class="hero-sub lede lede--light" data-reveal id="heroSub">
+        Documentado, medible y en operación en 7 días. Recupera los ingresos que hoy se pierden en llamadas sin responder, leads sin seguir y procesos manuales — sin contratar más personal.
+      </p>
+
+      <div class="hero-cta" data-reveal>
+        <a href="#auditoria" class="btn btn--gold">
+          Solicitar Auditoría Gratuita <span class="arr">→</span>
+        </a>
+        <a href="#casos" class="btn btn--ghost">
+          Ver resultados reales
+        </a>
+      </div>
+
+      <div class="hero-note" data-reveal>
+        <span class="pulse"></span>
+        <span>3 cupos disponibles esta semana · Sin costo · Sin compromiso</span>
+      </div>
+    </div>
+
+    <!-- RIGHT: live metric panel -->
+    <aside class="metric-panel" data-reveal="slow" aria-hidden="true">
+      <div class="mp-head">
+        <span class="eyebrow eyebrow--light">INGRESOS RECUPERADOS · Q3</span>
+        <span class="chip"><span class="dot"></span>EN VIVO</span>
+      </div>
+
+      <div class="mp-main">
+        <div class="mp-label" id="mpLabel">Clientes activos · promedio mensual</div>
+        <div class="mp-value">
+          <span class="num-tab" id="mpValue">0</span><span class="pct">%</span>
+        </div>
+        <div class="mp-delta">
+          <span class="caret"></span>
+          <span class="num-tab" id="mpDelta">+0.0</span> pts vs. mes anterior
+        </div>
+      </div>
+
+      <div class="mp-chart">
+        <svg viewBox="0 0 600 120" preserveAspectRatio="none" id="sparkSvg">
+          <defs>
+            <linearGradient id="sparkGrad" x1="0" x2="0" y1="0" y2="1">
+              <stop offset="0%" stop-color="#C49A4A" stop-opacity="0.35"/>
+              <stop offset="100%" stop-color="#C49A4A" stop-opacity="0"/>
+            </linearGradient>
+          </defs>
+          <path id="sparkArea" fill="url(#sparkGrad)" d=""/>
+          <path id="sparkLine" stroke="#C49A4A" stroke-width="1.6" fill="none" d="" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle id="sparkDot" r="4" fill="#C49A4A" stroke="#0A0A0A" stroke-width="2"/>
+        </svg>
+      </div>
+
+      <div class="mp-foot">
+        <span>32 clientes · 4 sectores</span>
+        <span>Actualizado 21.ABR.26</span>
+      </div>
+    </aside>
+  </div>
+
+  <!-- Ticker -->
+  <div class="wrap">
+    <div class="hero-ticker" data-reveal>
+      <span><strong id="tk1">—</strong> llamadas convertidas / sem</span>
+      <span><strong id="tk2">—</strong> leads recuperados este mes</span>
+      <span><strong id="tk3">—</strong> horas operativas devueltas</span>
+      <span><strong>7d</strong> implementación promedio</span>
+    </div>
+  </div>
+</header>
+
+<!-- ============ TRUST BAR ============ -->
+<section class="trust" data-screen-label="02 Trust">
+  <div class="wrap trust-inner">
+    <div class="trust-label" data-reveal>
+      Firmas y operadores que ya instalaron su sistema operativo<br/>
+      con SPM Advisory en 2025 — 2026.
+    </div>
+    <div class="trust-logos" data-reveal data-stagger>
+      <div class="t-logo">Alderman<small>Legal · MX</small></div>
+      <div class="t-logo">Vértice<small>Salud · CDMX</small></div>
+      <div class="t-logo">Casa Marín<small>Bienes Raíces</small></div>
+      <div class="t-logo">Grupo Solé<small>F&amp;B · USA</small></div>
+      <div class="t-logo">Norte Legal<small>Firma · MTY</small></div>
+      <div class="t-logo">Clínica Arista<small>Dental</small></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PROBLEMA / COSTO ============ -->
+<section class="problem sec-pad" id="problema" data-screen-label="03 Problema">
+  <div class="wrap">
+    <div class="section-head">
+      <div data-reveal>
+        <span class="eyebrow">01 / Diagnóstico</span>
+        <h2 class="h-1">El costo invisible de operar a mano.</h2>
+      </div>
+      <p class="lede" data-reveal>
+        La mayoría de empresas de 5 a 50 empleados no tienen un problema de ventas. Tienen un problema operativo — y lo están pagando en ingresos que nunca llegan al banco.
+      </p>
+    </div>
+
+    <div class="cost-grid" data-reveal data-stagger>
+      <div class="cost-cell">
+        <span class="num">01</span>
+        <h3>Llamadas no respondidas</h3>
+        <p>Cada llamada sin responder fuera de horario es un cliente que llama al competidor directo.</p>
+        <span class="loss">— $18,000 USD / mes promedio</span>
+      </div>
+      <div class="cost-cell">
+        <span class="num">02</span>
+        <h3>Leads sin seguimiento</h3>
+        <p>El 67% de los leads se pierde por falta de respuesta en menos de 5 minutos.</p>
+        <span class="loss">— 67% de leads perdidos</span>
+      </div>
+      <div class="cost-cell">
+        <span class="num">03</span>
+        <h3>Procesos manuales</h3>
+        <p>Tareas repetitivas que consumen al equipo y no agregan valor al cliente.</p>
+        <span class="loss">— 120 hrs / mes / persona</span>
+      </div>
+      <div class="cost-cell">
+        <span class="num">04</span>
+        <h3>Operación fuera de horario</h3>
+        <p>El 40% de las solicitudes llegan cuando nadie está disponible para atenderlas.</p>
+        <span class="loss">— 40% ingresos fuera de jornada</span>
+      </div>
+    </div>
+
+    <div class="cost-total" data-reveal>
+      <div>
+        <span class="eyebrow eyebrow--light">Costo operativo anual estimado</span>
+        <h3 style="margin-top: 12px;">
+          Una firma promedio pierde esto al año antes de vender un solo servicio adicional.
+        </h3>
+      </div>
+      <div>
+        <div class="big-num num-tab" id="costTotal">$340,000</div>
+        <small>USD / año · muestra de 32 empresas hispanas</small>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SOLUCION ============ -->
+<section class="solution sec-pad" id="solucion" data-screen-label="04 Solucion">
+  <div class="wrap">
+    <div class="section-head">
+      <div data-reveal>
+        <span class="eyebrow">02 / Sistema</span>
+        <h2 class="h-1">Un sistema operativo diseñado para tu negocio, instalado en una semana.</h2>
+      </div>
+      <p class="lede" data-reveal>
+        No es software genérico. No es más personal. Es la infraestructura que conecta tus operaciones, captura cada oportunidad y reporta en tu idioma: ingresos.
+      </p>
+    </div>
+
+    <div class="sol-layout">
+      <!-- left: list -->
+      <div class="sol-list" data-reveal>
+        <div class="sol-item">
+          <span class="i-num">01</span>
+          <div>
+            <h3>Captura total</h3>
+            <p>Cada llamada, mensaje, formulario y WhatsApp queda registrado, clasificado y asignado — nunca se pierde un contacto.</p>
+          </div>
+          <span class="plus">+</span>
+        </div>
+        <div class="sol-item">
+          <span class="i-num">02</span>
+          <div>
+            <h3>Respuesta 24/7</h3>
+            <p>Tu negocio responde en menos de 60 segundos, cualquier día, a cualquier hora, en tu tono de marca.</p>
+          </div>
+          <span class="plus">+</span>
+        </div>
+        <div class="sol-item">
+          <span class="i-num">03</span>
+          <div>
+            <h3>Seguimiento comercial</h3>
+            <p>Secuencias automáticas que califican, nutren y agendan — tu equipo comercial solo atiende leads listos.</p>
+          </div>
+          <span class="plus">+</span>
+        </div>
+        <div class="sol-item">
+          <span class="i-num">04</span>
+          <div>
+            <h3>Operaciones sin fricción</h3>
+            <p>Agendas, cobros, recordatorios y confirmaciones conectados. El equipo deja de copiar y pegar información entre sistemas.</p>
+          </div>
+          <span class="plus">+</span>
+        </div>
+        <div class="sol-item">
+          <span class="i-num">05</span>
+          <div>
+            <h3>Reportería semanal</h3>
+            <p>Un solo tablero con ingresos recuperados, tasa de respuesta, conversión y horas operativas — entregado cada lunes.</p>
+          </div>
+          <span class="plus">+</span>
+        </div>
+      </div>
+
+      <!-- right: flow diagram -->
+      <aside class="sol-diagram" data-reveal="slow">
+        <div class="sol-diagram-head">
+          <span class="eyebrow">Flujo operativo</span>
+          <span class="sys-tag">SYS · ACTIVO</span>
+        </div>
+
+        <div class="flow">
+          <div class="flow-row">
+            <span class="src">Llamada · 21:47</span>
+            <span class="act">Prospecto · consulta agenda</span>
+            <span class="out">→ Agendado</span>
+          </div>
+          <div class="flow-row">
+            <span class="src">WhatsApp · 22:03</span>
+            <span class="act">Nuevo lead · zona norte</span>
+            <span class="out">→ Calificado</span>
+          </div>
+          <div class="flow-row">
+            <span class="src">Formulario · 22:15</span>
+            <span class="act">Cotización · servicio premium</span>
+            <span class="out">→ Enviada</span>
+          </div>
+
+          <div class="flow-hub">
+            <span>CAPTURA · RESPUESTA · AGENDA · REPORTE</span>
+            <span class="name">SPM · OS</span>
+          </div>
+
+          <div class="flow-row">
+            <span class="src">CRM · sync</span>
+            <span class="act">Contacto + historial asignado</span>
+            <span class="out">→ Equipo</span>
+          </div>
+          <div class="flow-row">
+            <span class="src">Dashboard · lun</span>
+            <span class="act">Reporte semanal · dueño</span>
+            <span class="out">→ Entregado</span>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- ============ INDUSTRIAS ============ -->
+<section class="industries" id="industrias" data-screen-label="05 Industrias">
+  <div class="wrap">
+    <div class="ind-head">
+      <div data-reveal>
+        <span class="eyebrow eyebrow--light">03 / Industrias</span>
+        <h2 class="h-1" style="margin-top:16px;">Instalaciones especializadas por sector.</h2>
+      </div>
+      <p class="lede lede--light" data-reveal>
+        Cada sistema operativo se configura con la lógica, cumplimiento y métricas que tu industria exige. No reutilizamos plantillas.
+      </p>
+    </div>
+
+    <div class="ind-tabs" data-reveal data-stagger>
+      <article class="ind-card" data-ind>
+        <div class="ind-top">
+          <span class="ind-label">01 · SALUD PRIVADA</span>
+          <div class="ind-icon">
+            <svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M11 3v16M3 11h16"/></svg>
+          </div>
+        </div>
+        <div>
+          <h3 class="ind-title">Clínicas y<br/>consultorios privados.</h3>
+          <p class="ind-desc">Agendas llenas sin llamadas perdidas. Confirmación automática, recordatorio, y recaptura de pacientes que no agendaron la primera vez.</p>
+        </div>
+        <div class="ind-metrics">
+          <div class="ind-metric"><span class="v num-tab">+38%</span><span class="l">Agendas cubiertas</span></div>
+          <div class="ind-metric"><span class="v num-tab">−62%</span><span class="l">No-shows</span></div>
+        </div>
+      </article>
+
+      <article class="ind-card" data-ind>
+        <div class="ind-top">
+          <span class="ind-label">02 · INMOBILIARIA</span>
+          <div class="ind-icon">
+            <svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M3 10l8-6 8 6v9H3v-9z"/><path d="M9 19v-6h4v6"/></svg>
+          </div>
+        </div>
+        <div>
+          <h3 class="ind-title">Desarrolladores y<br/>agencias de bienes raíces.</h3>
+          <p class="ind-desc">Captura y calificación de leads 24/7 por portal, WhatsApp y showroom. Citas agendadas antes de que el equipo comercial encienda la computadora.</p>
+        </div>
+        <div class="ind-metrics">
+          <div class="ind-metric"><span class="v num-tab">3.2x</span><span class="l">Leads calificados</span></div>
+          <div class="ind-metric"><span class="v num-tab">&lt;90s</span><span class="l">Primera respuesta</span></div>
+        </div>
+      </article>
+
+      <article class="ind-card" data-ind>
+        <div class="ind-top">
+          <span class="ind-label">03 · FIRMAS LEGALES</span>
+          <div class="ind-icon">
+            <svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M4 19h14M6 19V9M16 19V9M3 9h16l-2-4H5L3 9z"/></svg>
+          </div>
+        </div>
+        <div>
+          <h3 class="ind-title">Despachos y<br/>consultorías jurídicas.</h3>
+          <p class="ind-desc">Pre-calificación de casos, ruteo por especialidad, confidencialidad y agendamiento con abogado en minutos — no días.</p>
+        </div>
+        <div class="ind-metrics">
+          <div class="ind-metric"><span class="v num-tab">+52%</span><span class="l">Consultas captadas</span></div>
+          <div class="ind-metric"><span class="v num-tab">−70%</span><span class="l">Horas admin</span></div>
+        </div>
+      </article>
+
+      <article class="ind-card" data-ind>
+        <div class="ind-top">
+          <span class="ind-label">04 · RESTAURANTES</span>
+          <div class="ind-icon">
+            <svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M6 3v8a3 3 0 006 0V3M9 11v8M15 3v16M15 9h3"/></svg>
+          </div>
+        </div>
+        <div>
+          <h3 class="ind-title">Grupos de F&amp;B<br/>y restaurantes premium.</h3>
+          <p class="ind-desc">Reservas, listas de espera, encuestas post-visita y recuperación de clientes inactivos — sin saturar al host.</p>
+        </div>
+        <div class="ind-metrics">
+          <div class="ind-metric"><span class="v num-tab">+24%</span><span class="l">Ocupación</span></div>
+          <div class="ind-metric"><span class="v num-tab">4.8★</span><span class="l">Satisfacción</span></div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CASOS ============ -->
+<section class="results sec-pad" id="casos" data-screen-label="06 Casos">
+  <div class="wrap">
+    <div class="section-head">
+      <div data-reveal>
+        <span class="eyebrow">04 / Resultados</span>
+        <h2 class="h-1">Ingresos reales, documentados.</h2>
+      </div>
+      <p class="lede" data-reveal>
+        Auditamos antes, instalamos, y reportamos después. Cada caso es verificable con acceso a sus propios dashboards.
+      </p>
+    </div>
+
+    <div class="case-grid" data-reveal data-stagger>
+      <article class="case-card">
+        <div class="case-head">
+          <span class="tag">SALUD · CDMX</span>
+          <span class="client">Clínica Arista</span>
+        </div>
+        <p class="case-quote">Dejamos de perder pacientes en el teléfono. La agenda se llena sola y el equipo solo confirma.</p>
+        <div class="case-meta">— Dra. L. Ramírez, Directora Médica · 24 consultorios</div>
+        <div class="case-metrics">
+          <div class="case-metric">
+            <div class="v num-tab"><em>+$47k</em></div>
+            <div class="l">USD / mes recuperados</div>
+          </div>
+          <div class="case-metric">
+            <div class="v num-tab">9 días</div>
+            <div class="l">Implementación</div>
+          </div>
+        </div>
+      </article>
+
+      <article class="case-card">
+        <div class="case-head">
+          <span class="tag">INMOBILIARIA · MTY</span>
+          <span class="client">Casa Marín</span>
+        </div>
+        <p class="case-quote">Triplicamos los leads calificados sin contratar a nadie. Mi equipo empezó a cerrar en lugar de filtrar.</p>
+        <div class="case-meta">— C. Marín, CEO · 3 desarrollos activos</div>
+        <div class="case-metrics">
+          <div class="case-metric">
+            <div class="v num-tab"><em>3.2×</em></div>
+            <div class="l">Leads calificados</div>
+          </div>
+          <div class="case-metric">
+            <div class="v num-tab">78s</div>
+            <div class="l">Primera respuesta</div>
+          </div>
+        </div>
+      </article>
+
+      <article class="case-card">
+        <div class="case-head">
+          <span class="tag">LEGAL · USA</span>
+          <span class="client">Norte Legal</span>
+        </div>
+        <p class="case-quote">Pasamos de perder consultas fuera de horario a capturar el 100%. El ROI se pagó el primer mes.</p>
+        <div class="case-meta">— M. Escobar, Managing Partner · Firma hispana TX</div>
+        <div class="case-metrics">
+          <div class="case-metric">
+            <div class="v num-tab"><em>+52%</em></div>
+            <div class="l">Consultas captadas</div>
+          </div>
+          <div class="case-metric">
+            <div class="v num-tab">6 días</div>
+            <div class="l">Implementación</div>
+          </div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PROCESO ============ -->
+<section class="process sec-pad" id="proceso" data-screen-label="07 Proceso">
+  <div class="wrap">
+    <div class="section-head">
+      <div data-reveal>
+        <span class="eyebrow">05 / Proceso</span>
+        <h2 class="h-1">Siete días. Cuatro etapas. Cero improvisación.</h2>
+      </div>
+      <p class="lede" data-reveal>
+        Un proceso de instalación probado en 32 empresas. Cada etapa entrega un hito verificable antes de pasar a la siguiente.
+      </p>
+    </div>
+
+    <div class="proc-steps" data-reveal data-stagger>
+      <div class="proc-step">
+        <span class="dot"></span>
+        <span class="day">Día 01 · Auditoría</span>
+        <h3>Diagnóstico operativo.</h3>
+        <p>90 minutos con el dueño y operaciones. Identificamos fugas y cuantificamos el ROI esperado antes de cobrar.</p>
+      </div>
+      <div class="proc-step">
+        <span class="dot"></span>
+        <span class="day">Día 02 — 04 · Diseño</span>
+        <h3>Blueprint del sistema.</h3>
+        <p>Mapeamos cada flujo, punto de contacto y KPI. Entregamos el plano en formato ejecutivo — lo aprueba el dueño.</p>
+      </div>
+      <div class="proc-step">
+        <span class="dot"></span>
+        <span class="day">Día 05 — 06 · Instalación</span>
+        <h3>Integración silenciosa.</h3>
+        <p>Conectamos herramientas existentes, cargamos históricos y entrenamos al sistema con tu tono y reglas de negocio.</p>
+      </div>
+      <div class="proc-step">
+        <span class="dot"></span>
+        <span class="day">Día 07 · Go live</span>
+        <h3>Operación supervisada.</h3>
+        <p>Monitoreo continuo la primera semana, reporte de resultados el día 14 y 30. Ajustes incluidos por 60 días.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FAQ / OBJECIONES ============ -->
+<section class="faq sec-pad" data-screen-label="08 Objeciones">
+  <div class="wrap">
+    <div class="faq-grid">
+      <div data-reveal>
+        <span class="eyebrow">06 / Objeciones</span>
+        <h2 class="h-1" style="margin-top:16px;">Lo que todo<br/>dueño pregunta.</h2>
+        <p class="lede" style="margin-top:24px; max-width:34ch;">
+          Respondemos directo. Si tu pregunta no está aquí, la primera llamada es el mejor lugar para resolverla.
+        </p>
+      </div>
+
+      <div class="faq-list" data-reveal>
+        <div class="faq-item" data-faq>
+          <button class="faq-q">¿Necesito contratar más personal para operar esto?
+            <span class="icon">+</span></button>
+          <div class="faq-a"><p>No. El sistema se diseña para que tu equipo actual haga más con menos esfuerzo. En todos nuestros casos el headcount se mantuvo o se redujo — nunca se aumentó.</p></div>
+        </div>
+        <div class="faq-item" data-faq>
+          <button class="faq-q">¿Cuánto cuesta una instalación?
+            <span class="icon">+</span></button>
+          <div class="faq-a"><p>Depende del sector y tamaño. En la auditoría gratuita calculamos el ROI esperado y proponemos un rango. Nunca comenzamos un proyecto donde el retorno sea menor a 4× la inversión en el primer año.</p></div>
+        </div>
+        <div class="faq-item" data-faq>
+          <button class="faq-q">¿Qué pasa con mis herramientas actuales?
+            <span class="icon">+</span></button>
+          <div class="faq-a"><p>Trabajamos sobre lo que ya tienes. WhatsApp, correo, CRM, calendario, sistema de citas, punto de venta — el sistema se conecta, no los reemplaza.</p></div>
+        </div>
+        <div class="faq-item" data-faq>
+          <button class="faq-q">¿Qué tan seguro es? ¿Mis datos quedan protegidos?
+            <span class="icon">+</span></button>
+          <div class="faq-a"><p>Operamos bajo estándares equivalentes a los del sector financiero: cifrado en tránsito y reposo, acuerdos de confidencialidad, y acceso con auditoría. Para salud y legal aplicamos protocolos específicos de cumplimiento.</p></div>
+        </div>
+        <div class="faq-item" data-faq>
+          <button class="faq-q">¿La auditoría es realmente gratuita?
+            <span class="icon">+</span></button>
+          <div class="faq-a"><p>Sí. Es una sesión de 90 minutos con diagnóstico real, cálculo de ingresos recuperables y recomendaciones aplicables aunque no trabajes con nosotros. Solo calificamos 3 empresas por semana.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CTA / FORM ============ -->
+<section class="cta sec-pad" id="auditoria" data-screen-label="09 CTA Form">
+  <div class="wrap cta-layout">
+    <div class="cta-copy">
+      <span class="eyebrow eyebrow--gold" data-reveal>07 / AUDITORÍA GRATUITA</span>
+      <h2 data-reveal style="margin-top: 20px;">
+        Descubre cuánto dinero<br/>
+        <em>está saliendo por la puerta</em><br/>
+        de tu operación.
+      </h2>
+      <p class="lede lede--light" data-reveal>
+        90 minutos, sin costo y sin pitch. Un diagnóstico real con cálculo de ingresos recuperables. Si encaja, proponemos instalación. Si no, te quedas con las recomendaciones.
+      </p>
+
+      <div class="cta-bullets" data-reveal data-stagger>
+        <div class="cta-bullet">
+          <svg class="check" viewBox="0 0 18 18" fill="none"><path d="M4 9l3 3 7-7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Cálculo concreto de ingresos recuperables al año
+        </div>
+        <div class="cta-bullet">
+          <svg class="check" viewBox="0 0 18 18" fill="none"><path d="M4 9l3 3 7-7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Mapa de fugas operativas priorizadas
+        </div>
+        <div class="cta-bullet">
+          <svg class="check" viewBox="0 0 18 18" fill="none"><path d="M4 9l3 3 7-7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Plan de instalación con tiempos y ROI esperado
+        </div>
+        <div class="cta-bullet">
+          <svg class="check" viewBox="0 0 18 18" fill="none"><path d="M4 9l3 3 7-7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Sin compromiso · sin venta · sin letra chica
+        </div>
+      </div>
+    </div>
+
+    <!-- FORM -->
+    <aside class="form-card" data-reveal="slow">
+      <div class="form-head">
+        <h3>Solicitar auditoría</h3>
+        <span class="form-step" id="formStep">Paso 1 / 2</span>
+      </div>
+
+      <form id="audForm" novalidate>
+        <div id="step1">
+          <div class="field-group">
+            <div class="field">
+              <label for="f-name">Nombre</label>
+              <input id="f-name" name="name" type="text" placeholder="Cómo prefieres que te llamemos" required>
+            </div>
+            <div class="field">
+              <label for="f-company">Empresa</label>
+              <input id="f-company" name="company" type="text" placeholder="Nombre legal o comercial" required>
+            </div>
+          </div>
+          <div class="field-group">
+            <div class="field">
+              <label for="f-email">Email corporativo</label>
+              <input id="f-email" name="email" type="email" placeholder="nombre@empresa.com" required>
+            </div>
+            <div class="field">
+              <label for="f-phone">WhatsApp</label>
+              <input id="f-phone" name="phone" type="tel" placeholder="+52 · · ·" required>
+            </div>
+          </div>
+          <div class="field-group">
+            <div class="field">
+              <label for="f-industry">Industria</label>
+              <select id="f-industry" name="industry" required>
+                <option value="">Selecciona sector</option>
+                <option>Salud privada</option>
+                <option>Inmobiliaria</option>
+                <option>Legal</option>
+                <option>Restaurantes / F&amp;B</option>
+                <option>Otra</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="f-size">Tamaño del equipo</label>
+              <select id="f-size" name="size" required>
+                <option value="">Número de empleados</option>
+                <option>1 — 5</option>
+                <option>6 — 20</option>
+                <option>21 — 50</option>
+                <option>50+</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div id="step2" style="display:none;">
+          <div class="field">
+            <label for="f-problem">Principal problema operativo</label>
+            <textarea id="f-problem" name="problem" placeholder="Ej: perdemos llamadas después de las 19h, no alcanzamos a dar seguimiento a los leads, el equipo pasa horas copiando información entre sistemas..." required></textarea>
+            <span class="help">Cuanto más específico, más útil la auditoría. Esto es confidencial.</span>
+          </div>
+
+          <div class="field">
+            <label>Franja horaria preferida para la sesión</label>
+            <div class="tw-pills" id="timeSlots" style="margin-top:8px;">
+              <span class="tw-pill" data-slot>Mañana (9 — 12h)</span>
+              <span class="tw-pill" data-slot>Mediodía (12 — 15h)</span>
+              <span class="tw-pill on" data-slot>Tarde (15 — 18h)</span>
+              <span class="tw-pill" data-slot>Tarde-noche (18 — 20h)</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-foot">
+          <span class="trust-line">
+            <svg class="lock" viewBox="0 0 10 10" fill="none"><rect x="1.5" y="4" width="7" height="5" stroke="currentColor" stroke-width="1"/><path d="M3 4V2.5a2 2 0 014 0V4" stroke="currentColor" stroke-width="1"/></svg>
+            Confidencial · 256-bit TLS
+          </span>
+          <button type="submit" class="btn btn--gold" id="formBtn">
+            Continuar <span class="arr">→</span>
+          </button>
+        </div>
+      </form>
+
+      <div class="form-success" id="formSuccess">
+        <div class="mark">✓</div>
+        <h3 class="h-3" style="color:var(--ivory); margin-bottom:12px;">Solicitud recibida.</h3>
+        <p style="color:rgba(247,245,240,0.65); max-width:32ch; margin:0 auto;">
+          Un asesor senior te contactará en menos de 4 horas hábiles para confirmar la franja y enviar la agenda de la sesión.
+        </p>
+      </div>
+    </aside>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="foot-brand">
+        <a href="#" class="logo">
+          <span class="logo-mark" aria-hidden="true">
+            <i class="on"><span>S</span></i><i></i><i class="gold"><span>P</span></i>
+            <i></i><i><span>·</span></i><i></i>
+            <i class="gold"><span>M</span></i><i></i><i class="on"><span>→</span></i>
+          </span>
+          SPM <span class="dot">·</span> Advisory
+        </a>
+        <p>Instalamos sistemas operativos que generan ingresos mientras el dueño duerme — documentado, medible, en 7 días.</p>
+      </div>
+      <div class="foot-col">
+        <h5>Firma</h5>
+        <ul>
+          <li><a href="#problema">Diagnóstico</a></li>
+          <li><a href="#solucion">Sistema</a></li>
+          <li><a href="#proceso">Proceso</a></li>
+          <li><a href="#casos">Casos</a></li>
+        </ul>
+      </div>
+      <div class="foot-col">
+        <h5>Industrias</h5>
+        <ul>
+          <li><a href="#industrias">Salud privada</a></li>
+          <li><a href="#industrias">Inmobiliaria</a></li>
+          <li><a href="#industrias">Legal</a></li>
+          <li><a href="#industrias">Restaurantes</a></li>
+        </ul>
+      </div>
+      <div class="foot-col">
+        <h5>Contacto</h5>
+        <ul>
+          <li><a href="#auditoria">Auditoría gratuita</a></li>
+          <li><a href="mailto:hola@spmadvisory.mx">hola@spmadvisory.mx</a></li>
+          <li><a href="#">CDMX · Monterrey · Austin</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 SPM Advisory. Todos los derechos reservados.</span>
+      <span>AVISO DE PRIVACIDAD · TÉRMINOS</span>
+    </div>
+  </div>
+</footer>
+
+<!-- ============ TWEAKS PANEL ============ -->
+<div class="tweaks-panel" id="tweaksPanel">
+  <h4>Tweaks</h4>
+
+  <div class="tw-row">
+    <label>Color de acento</label>
+    <div class="tw-swatches" id="twSwatches">
+      <span class="tw-swatch on" data-accent="gold" style="background:#C49A4A"></span>
+      <span class="tw-swatch" data-accent="copper" style="background:#B87333"></span>
+      <span class="tw-swatch" data-accent="sage" style="background:#7A8A6E"></span>
+      <span class="tw-swatch" data-accent="slate" style="background:#5B6B7A"></span>
+      <span class="tw-swatch" data-accent="crimson" style="background:#9A3B3B"></span>
+    </div>
+  </div>
+
+  <div class="tw-row">
+    <label>Métrica del hero</label>
+    <div class="tw-pills" id="twMetric">
+      <span class="tw-pill on" data-metric="recovered">% ingresos</span>
+      <span class="tw-pill" data-metric="calls">Llamadas</span>
+      <span class="tw-pill" data-metric="hours">Horas</span>
+      <span class="tw-pill" data-metric="roi">ROI anual</span>
+    </div>
+  </div>
+
+  <div class="tw-row">
+    <label>Variante del hero headline</label>
+    <div class="tw-pills" id="twHero">
+      <span class="tw-pill on" data-hero="A">A · Dormir</span>
+      <span class="tw-pill" data-hero="B">B · 7 días</span>
+      <span class="tw-pill" data-hero="C">C · Fugas</span>
+    </div>
+  </div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
