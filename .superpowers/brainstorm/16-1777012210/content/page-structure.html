@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Estructura de Página — Propuesta</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #111; color: #f0ede8; font-family: Inter, system-ui, sans-serif; padding: 32px 24px; }
+  h1 { font-size: 1.1rem; font-weight: 600; color: #C49A4A; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 6px; }
+  .subtitle { color: #888; font-size: 0.85rem; margin-bottom: 36px; }
+
+  .split { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+
+  .col-title {
+    font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.12em;
+    margin-bottom: 16px; padding-bottom: 8px; border-bottom: 1px solid #2a2a2a;
+  }
+  .col-title.current { color: #555; }
+  .col-title.proposed { color: #C49A4A; }
+
+  .section-block {
+    border-radius: 8px; padding: 10px 14px;
+    margin-bottom: 8px; font-size: 0.78rem;
+    display: flex; align-items: center; gap: 10px;
+    border: 1px solid transparent;
+  }
+  .section-block .icon { font-size: 1rem; flex-shrink: 0; width: 20px; text-align: center; }
+  .section-block .info { flex: 1; }
+  .section-block .label { font-weight: 600; margin-bottom: 2px; }
+  .section-block .desc { font-size: 0.68rem; color: #666; line-height: 1.4; }
+
+  /* current */
+  .existing { background: #1a1a1a; border-color: #2a2a2a; }
+  .existing .label { color: #888; }
+
+  /* kept */
+  .kept { background: #1a1a1a; border-color: #2a2a2a; }
+  .kept .label { color: #f0ede8; }
+
+  /* new */
+  .new-section { background: #1a1400; border-color: #C49A4A44; }
+  .new-section .label { color: #C49A4A; }
+  .new-section .desc { color: #8a7040; }
+  .new-badge {
+    font-size: 0.58rem; background: #C49A4A; color: #000;
+    padding: 1px 6px; border-radius: 3px; font-weight: 700;
+    letter-spacing: 0.05em; flex-shrink: 0;
+  }
+
+  /* upgraded */
+  .upgraded { background: #0d1520; border-color: #2a4a6a; }
+  .upgraded .label { color: #7ab3d4; }
+  .upgraded .desc { color: #4a7090; }
+  .upg-badge {
+    font-size: 0.58rem; background: #2a5580; color: #7ab3d4;
+    padding: 1px 6px; border-radius: 3px; font-weight: 700;
+    letter-spacing: 0.05em; flex-shrink: 0;
+  }
+
+  /* removed */
+  .removed { background: #1a1a1a; border-color: #2a2a2a; opacity: 0.35; }
+  .removed .label { color: #555; text-decoration: line-through; }
+
+  .legend {
+    display: flex; gap: 16px; margin-bottom: 28px; flex-wrap: wrap;
+  }
+  .leg-item { display: flex; align-items: center; gap: 6px; font-size: 0.72rem; color: #777; }
+  .leg-dot { width: 10px; height: 10px; border-radius: 2px; }
+  .leg-dot.new { background: #C49A4A; }
+  .leg-dot.upg { background: #2a5580; }
+  .leg-dot.kept { background: #333; }
+  .leg-dot.rem { background: #222; border: 1px solid #333; }
+
+  .cta-note {
+    margin-top: 24px; padding: 14px 16px;
+    background: #0d1f0d; border: 1px solid #1a4d1a; border-radius: 8px;
+    font-size: 0.78rem; color: #4caf50; line-height: 1.5;
+  }
+
+  .sticky-note {
+    margin-top: 10px; padding: 14px 16px;
+    background: #1a1400; border: 1px solid #C49A4A33; border-radius: 8px;
+    font-size: 0.78rem; color: #C49A4A88; line-height: 1.5;
+  }
+
+  .options { margin-top: 28px; display: flex; flex-direction: column; gap: 12px; }
+  .option {
+    border: 1.5px solid #2a2a2a; border-radius: 10px;
+    padding: 14px 18px; cursor: pointer;
+    transition: border-color 0.2s;
+    display: flex; align-items: center; gap: 14px;
+  }
+  .option:hover { border-color: #C49A4A44; }
+  .option.selected { border-color: #C49A4A; background: #1a1400; }
+  .letter {
+    width: 28px; height: 28px; border-radius: 50%;
+    background: #C49A4A22; color: #C49A4A;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 0.8rem; flex-shrink: 0;
+  }
+  .option h3 { font-size: 0.9rem; font-weight: 600; margin-bottom: 3px; }
+  .option p { font-size: 0.75rem; color: #777; }
+</style>
+</head>
+<body>
+
+<h1>Estructura de página propuesta</h1>
+<p class="subtitle">Comparación: página actual vs. página orientada a conversión</p>
+
+<div class="legend">
+  <div class="leg-item"><div class="leg-dot new"></div> Sección nueva</div>
+  <div class="leg-item"><div class="leg-dot upg"></div> Sección mejorada</div>
+  <div class="leg-item"><div class="leg-dot kept"></div> Se mantiene igual</div>
+  <div class="leg-item"><div class="leg-dot rem"></div> Se elimina</div>
+</div>
+
+<div class="split">
+
+  <!-- ACTUAL -->
+  <div>
+    <div class="col-title current">Estructura actual</div>
+
+    <div class="section-block existing">
+      <div class="icon">🎯</div>
+      <div class="info">
+        <div class="label">Hero + Canvas animation</div>
+        <div class="desc">Headline, badge, CTA primario</div>
+      </div>
+    </div>
+
+    <div class="section-block existing">
+      <div class="icon">😤</div>
+      <div class="info">
+        <div class="label">Dolor específico</div>
+        <div class="desc">Stat grande + lista de pain points</div>
+      </div>
+    </div>
+
+    <div class="section-block existing">
+      <div class="icon">✨</div>
+      <div class="info">
+        <div class="label">Features 3 columnas</div>
+        <div class="desc">La solución, 3 features en grid</div>
+      </div>
+    </div>
+
+    <div class="section-block existing">
+      <div class="icon">📊</div>
+      <div class="info">
+        <div class="label">Caso de éxito</div>
+        <div class="desc">Métricas + cita del cliente</div>
+      </div>
+    </div>
+
+    <div class="section-block existing">
+      <div class="icon">⚖️</div>
+      <div class="info">
+        <div class="label">Tabla comparativa</div>
+        <div class="desc">Manual vs Sistema S.P.M.</div>
+      </div>
+    </div>
+
+    <div class="section-block existing">
+      <div class="icon">📝</div>
+      <div class="info">
+        <div class="label">CTA + Formulario</div>
+        <div class="desc">Form estático al fondo de la página</div>
+      </div>
+    </div>
+
+    <div style="height: 8px;"></div>
+    <div style="text-align:center; font-size:0.72rem; color:#444; margin-top:8px;">6 secciones · Formulario como único CTA</div>
+  </div>
+
+  <!-- PROPUESTA -->
+  <div>
+    <div class="col-title proposed">Estructura propuesta</div>
+
+    <div class="section-block upgraded">
+      <div class="icon">🎯</div>
+      <div class="info">
+        <div class="label">Hero mejorado</div>
+        <div class="desc">+ Sub-headline con resultado específico + CTA WhatsApp visible</div>
+      </div>
+      <span class="upg-badge">MEJORA</span>
+    </div>
+
+    <div class="section-block kept">
+      <div class="icon">😤</div>
+      <div class="info">
+        <div class="label">Dolor específico</div>
+        <div class="desc">Se mantiene igual — funciona bien</div>
+      </div>
+    </div>
+
+    <div class="section-block new-section">
+      <div class="icon">🔢</div>
+      <div class="info">
+        <div class="label">Cómo Funciona — Cards (3 pasos)</div>
+        <div class="desc">Auditoría → Instalación → Resultado. Cada card con entregable concreto y plazo.</div>
+      </div>
+      <span class="new-badge">NUEVO</span>
+    </div>
+
+    <div class="section-block kept">
+      <div class="icon">✨</div>
+      <div class="info">
+        <div class="label">Features 3 columnas</div>
+        <div class="desc">Se mantiene — buen soporte a las cards</div>
+      </div>
+    </div>
+
+    <div class="section-block upgraded">
+      <div class="icon">📊</div>
+      <div class="info">
+        <div class="label">Caso de éxito mejorado</div>
+        <div class="desc">+ Animación de contadores + mini-timeline del cliente</div>
+      </div>
+      <span class="upg-badge">MEJORA</span>
+    </div>
+
+    <div class="section-block new-section">
+      <div class="icon">🛡️</div>
+      <div class="info">
+        <div class="label">Garantía de riesgo cero</div>
+        <div class="desc">"Si en 14 días no ves resultados, no pagas." — elimina la última objeción de compra.</div>
+      </div>
+      <span class="new-badge">NUEVO</span>
+    </div>
+
+    <div class="section-block kept">
+      <div class="icon">⚖️</div>
+      <div class="info">
+        <div class="label">Tabla comparativa</div>
+        <div class="desc">Se mantiene igual</div>
+      </div>
+    </div>
+
+    <div class="section-block upgraded">
+      <div class="icon">📝</div>
+      <div class="info">
+        <div class="label">CTA + Form + WhatsApp</div>
+        <div class="desc">WhatsApp como CTA primario, formulario como alternativa. Sticky bar en mobile.</div>
+      </div>
+      <span class="upg-badge">MEJORA</span>
+    </div>
+
+    <div style="height: 8px;"></div>
+    <div style="text-align:center; font-size:0.72rem; color:#C49A4A88; margin-top:8px;">8 secciones · WhatsApp como CTA primario · Garantía activa</div>
+  </div>
+
+</div>
+
+<div class="cta-note">
+  ✓ El chat/asistente se menciona dentro de "Features" como upsell — no como producto principal. La promesa central sigue siendo el sistema operativo de 7 días.
+</div>
+
+<div class="sticky-note">
+  ⚠️ Pregunta clave: ¿quieres que la sección de Garantía diga "14 días" o tienes otro período/condición específica que ya usas con clientes?
+</div>
+
+<div class="options">
+  <div class="option" data-choice="approved" onclick="toggleSelect(this)">
+    <div class="letter">✓</div>
+    <div>
+      <h3>Apruebo esta estructura</h3>
+      <p>Podemos avanzar al diseño detallado de cada sección nueva</p>
+    </div>
+  </div>
+  <div class="option" data-choice="adjust" onclick="toggleSelect(this)">
+    <div class="letter">±</div>
+    <div>
+      <h3>Necesito ajustar algo</h3>
+      <p>Cuéntame qué cambiarías en la terminal</p>
+    </div>
+  </div>
+</div>
+
+<script>
+function toggleSelect(el) {
+  const wasSelected = el.classList.contains('selected');
+  document.querySelectorAll('.option').forEach(o => o.classList.remove('selected'));
+  if (!wasSelected) {
+    el.classList.add('selected');
+    const choice = el.dataset.choice;
+    const text = el.querySelector('h3').textContent;
+    if (window.recordChoice) recordChoice(choice, text);
+  }
+}
+</script>
+
+</body>
+</html>

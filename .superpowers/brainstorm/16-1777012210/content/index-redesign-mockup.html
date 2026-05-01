@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>S.P.M. Advisory — Rediseño Principal $30K</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap');
+
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#05080F;color:#C8D4E3;font-family:'Inter',sans-serif;font-size:14px;line-height:1.6}
+.mono{font-family:'JetBrains Mono',monospace}
+
+/* ─ Layout ─ */
+.page{max-width:900px;margin:0 auto;padding:24px}
+.section{margin-bottom:8px;border-radius:12px;overflow:hidden;position:relative}
+.section-inner{padding:32px 28px}
+.label-new{
+  display:inline-block;background:#00C8FF;color:#000;
+  font-size:9px;font-weight:700;padding:2px 7px;border-radius:3px;
+  letter-spacing:.08em;vertical-align:middle;margin-left:8px
+}
+.label-improved{
+  display:inline-block;background:#7C3AED33;color:#a87df5;border:1px solid #7C3AED55;
+  font-size:9px;font-weight:700;padding:2px 7px;border-radius:3px;
+  letter-spacing:.08em;vertical-align:middle;margin-left:8px
+}
+.label-kept{
+  display:inline-block;background:#1e2a1e;color:#4caf50;border:1px solid #2d4a2d;
+  font-size:9px;font-weight:700;padding:2px 7px;border-radius:3px;
+  letter-spacing:.08em;vertical-align:middle;margin-left:8px
+}
+.section-tag{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.14em;margin-bottom:8px;display:flex;align-items:center;gap:6px}
+
+/* ─ Section Backgrounds ─ */
+.s-hero{background:linear-gradient(135deg,#05080F 60%,#0a1020)}
+.s-trust{background:#08101E;border-top:1px solid rgba(0,200,255,.08);border-bottom:1px solid rgba(0,200,255,.08)}
+.s-problem{background:#0A1020}
+.s-how{background:#05080F;border-top:1px solid rgba(0,200,255,.06)}
+.s-industries{background:#08101E}
+.s-proof{background:#0A1020}
+.s-guarantee{background:linear-gradient(135deg,#050f08,#05080F)}
+.s-cta{background:#08101E}
+
+/* ─ Colors ─ */
+.cyan{color:#00C8FF}
+.gold{color:#C49A4A}
+.purple{color:#7C3AED}
+.white{color:#E2EAF4}
+.dim{color:#4A6080}
+.green{color:#00E87A}
+
+/* ─ Hero Mockup ─ */
+.hero-layout{display:grid;grid-template-columns:1fr 380px;gap:40px;align-items:center}
+.badge-pill{
+  display:inline-flex;align-items:center;gap:8px;
+  background:rgba(0,200,255,.07);border:1px solid rgba(0,200,255,.22);
+  padding:6px 14px;border-radius:100px;
+  font-size:10px;font-weight:500;color:#00C8FF;letter-spacing:1.8px;text-transform:uppercase;
+  margin-bottom:20px
+}
+.badge-dot{width:6px;height:6px;border-radius:50%;background:#00C8FF;box-shadow:0 0 8px #00C8FF}
+.hero-h1{font-size:32px;font-weight:800;line-height:1.08;color:#E2EAF4;margin-bottom:16px;letter-spacing:-.02em}
+.hero-h1 .grad{background:linear-gradient(135deg,#00C8FF,#7C3AED);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-sub{font-size:13px;color:rgba(200,212,227,.75);line-height:1.7;margin-bottom:28px;max-width:440px}
+.cta-row{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.btn-wa{
+  display:inline-flex;align-items:center;gap:8px;
+  background:#25D366;color:#000;font-weight:700;font-size:12px;
+  padding:12px 22px;border-radius:8px;letter-spacing:.02em
+}
+.btn-wa-icon{font-size:14px}
+.btn-sec{
+  display:inline-flex;align-items:center;gap:6px;
+  color:#00C8FF;font-size:12px;font-weight:600;
+  background:transparent
+}
+.hero-3d-box{
+  background:#0a1020;border:1px solid rgba(0,200,255,.12);border-radius:14px;
+  height:280px;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  position:relative;overflow:hidden
+}
+.hero-3d-label{font-size:9px;color:rgba(0,200,255,.5);letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px}
+.hero-3d-sphere{
+  width:140px;height:140px;border-radius:50%;
+  background:radial-gradient(circle at 35% 35%,rgba(0,200,255,.35),rgba(124,58,237,.2) 50%,rgba(0,0,0,.8));
+  box-shadow:0 0 60px rgba(0,200,255,.2),inset 0 0 40px rgba(124,58,237,.15);
+  position:relative
+}
+.hero-3d-ring{
+  position:absolute;inset:-20px;border-radius:50%;
+  border:1px solid rgba(0,200,255,.15);
+  animation:spin 8s linear infinite
+}
+.hero-3d-ring2{
+  position:absolute;inset:-40px;border-radius:50%;
+  border:1px solid rgba(124,58,237,.1);
+  animation:spin 14s linear infinite reverse
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+.float-stat-box{
+  position:absolute;background:rgba(10,16,32,.92);backdrop-filter:blur(12px);
+  border:1px solid rgba(0,200,255,.2);border-radius:8px;padding:10px 14px;
+  display:flex;align-items:center;gap:10px
+}
+.float-stat-box:first-of-type{top:18px;right:-10px}
+.float-stat-box:last-of-type{bottom:18px;left:-10px}
+.fsb-num{font-size:16px;font-weight:500;color:#00C8FF;font-family:'JetBrains Mono',monospace;text-shadow:0 0 14px rgba(0,200,255,.6)}
+.fsb-lbl{font-size:9px;color:#4A6080;line-height:1.3;max-width:70px}
+
+/* ─ Trust Bar ─ */
+.trust-grid{display:flex;justify-content:center;align-items:center;gap:48px;flex-wrap:wrap;padding:16px 0}
+.trust-stat{text-align:center}
+.trust-num{font-family:'JetBrains Mono',monospace;font-size:28px;font-weight:500;color:#00C8FF;text-shadow:0 0 20px rgba(0,200,255,.4);line-height:1}
+.trust-lbl{font-size:9px;color:rgba(255,255,255,.3);margin-top:6px;text-transform:uppercase;letter-spacing:.1em}
+.trust-divider{width:1px;height:36px;background:linear-gradient(transparent,rgba(0,200,255,.25),transparent)}
+
+/* ─ Problem ─ */
+.problem-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.prob-card{background:#111E32;border:1px solid rgba(0,200,255,.07);border-radius:10px;padding:20px}
+.prob-card-red{border-top:2px solid #FF3B6B}
+.prob-card-cyan{border-top:2px solid rgba(0,200,255,.5)}
+.prob-card h4{font-size:12px;font-weight:600;margin-bottom:12px}
+.prob-item{display:flex;gap:8px;margin-bottom:10px;font-size:11px;color:#4A6080;line-height:1.5}
+.icon-x{color:#FF3B6B;flex-shrink:0}
+.icon-check{color:#00C8FF;flex-shrink:0}
+
+/* ─ How It Works Cards ─ */
+.how-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:24px}
+.how-card{
+  background:#0E1828;border:1px solid rgba(0,200,255,.08);border-radius:12px;
+  padding:24px 20px;position:relative;overflow:hidden
+}
+.how-card:nth-child(2){border-color:rgba(0,200,255,.25)}
+.how-card::before{
+  content:attr(data-n);position:absolute;top:-6px;right:12px;
+  font-size:52px;font-weight:900;color:rgba(0,200,255,.04);line-height:1
+}
+.how-phase{font-size:9px;text-transform:uppercase;letter-spacing:.14em;color:#00C8FF;margin-bottom:8px}
+.how-title{font-size:14px;font-weight:700;color:#E2EAF4;margin-bottom:8px}
+.how-desc{font-size:11px;color:#4A6080;line-height:1.6;margin-bottom:14px}
+.how-tag{
+  display:inline-flex;align-items:center;gap:6px;
+  background:#0d1f0d;border:1px solid #1a4d1a;
+  padding:4px 10px;border-radius:6px;
+  font-size:10px;color:#4caf50
+}
+.how-icon{font-size:20px;margin-bottom:12px}
+
+/* ─ Industry Cards ─ */
+.ind-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.ind-card{
+  background:#111E32;border:1px solid rgba(0,200,255,.07);border-radius:12px;
+  padding:24px;position:relative;overflow:hidden;transition:.3s
+}
+.ind-icon-box{
+  width:44px;height:44px;border-radius:10px;
+  background:rgba(0,200,255,.08);border:1px solid rgba(0,200,255,.15);
+  display:flex;align-items:center;justify-content:center;font-size:20px;margin-bottom:16px
+}
+.ind-title{font-size:14px;font-weight:600;color:#E2EAF4;margin-bottom:6px}
+.ind-desc{font-size:11px;color:#4A6080;margin-bottom:16px;line-height:1.6}
+.ind-example{
+  background:#0a1a0a;border:1px solid #1a3a1a;border-radius:8px;
+  padding:10px 12px;display:flex;align-items:flex-start;gap:8px
+}
+.ind-example-icon{font-size:12px;color:#00E87A;flex-shrink:0;margin-top:1px}
+.ind-example-text{font-size:10px;color:#3a7a3a;line-height:1.5}
+.ind-example-metric{font-weight:700;color:#00E87A}
+.ind-link{display:flex;align-items:center;gap:4px;margin-top:14px;font-size:11px;font-weight:600;color:#00C8FF}
+
+/* ─ Social Proof / Case ─ */
+.proof-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.proof-card{background:#111E32;border:1px solid rgba(0,200,255,.07);border-radius:12px;padding:24px}
+.proof-quote{font-size:12px;line-height:1.8;color:#C8D4E3;border-left:2px solid #00C8FF;padding-left:14px;margin-bottom:16px;font-style:italic}
+.proof-meta{display:flex;align-items:center;gap:12px}
+.proof-avatar{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#00C8FF,#7C3AED);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:11px;color:#000;flex-shrink:0}
+.proof-name{font-size:11px;font-weight:600;color:#E2EAF4}
+.proof-role{font-size:10px;color:#4A6080}
+.proof-badge{display:inline-block;background:rgba(0,200,255,.07);border:1px solid rgba(0,200,255,.15);color:#00C8FF;font-size:9px;padding:3px 10px;border-radius:100px;margin-top:6px;font-family:'JetBrains Mono',monospace}
+.proof-note{font-size:9px;color:#2a4a2a;margin-top:6px;font-style:italic}
+
+/* ─ Guarantee ─ */
+.guarantee-box{
+  background:#0a1a0a;border:1px solid #1a3a1a;border-radius:12px;
+  padding:28px;display:flex;align-items:flex-start;gap:24px
+}
+.guarantee-icon{font-size:36px;flex-shrink:0}
+.guarantee-h{font-size:18px;font-weight:700;color:#E2EAF4;margin-bottom:8px}
+.guarantee-p{font-size:12px;color:#3a7a3a;line-height:1.7;max-width:560px}
+.guarantee-pills{display:flex;gap:10px;margin-top:16px;flex-wrap:wrap}
+.g-pill{background:#0d250d;border:1px solid #1a4a1a;padding:5px 14px;border-radius:100px;font-size:10px;color:#4caf50}
+
+/* ─ CTA Dual ─ */
+.cta-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:start}
+.cta-left h3{font-size:20px;font-weight:700;color:#E2EAF4;margin-bottom:12px}
+.cta-left p{font-size:12px;color:#4A6080;line-height:1.7;margin-bottom:20px}
+.cta-wa-big{
+  display:flex;align-items:center;gap:14px;
+  background:#25D366;border-radius:10px;padding:16px 20px;
+  font-weight:700;font-size:14px;color:#000;width:100%;margin-bottom:12px
+}
+.cta-wa-sub{font-size:10px;font-weight:400;color:rgba(0,0,0,.6);display:block;margin-top:2px}
+.cta-form-card{background:#111E32;border:1px solid rgba(0,200,255,.12);border-radius:12px;padding:24px}
+.cta-form-card h4{font-size:13px;font-weight:600;color:#E2EAF4;margin-bottom:16px}
+.fake-input{background:rgba(255,255,255,.03);border:1px solid rgba(0,200,255,.12);border-radius:6px;padding:9px 12px;font-size:11px;color:rgba(255,255,255,.2);margin-bottom:10px;width:100%}
+.fake-btn{width:100%;background:linear-gradient(135deg,#00C8FF,#7C3AED);border-radius:6px;padding:11px;font-size:12px;font-weight:700;color:#000;text-align:center;margin-top:4px}
+.form-alt-note{font-size:10px;color:#2a4a6a;text-align:center;margin-top:8px}
+
+/* ─ Sticky Bar Callout ─ */
+.sticky-callout{
+  background:#0d1525;border:1px solid rgba(0,200,255,.15);border-radius:8px;
+  padding:12px 16px;display:flex;align-items:center;gap:12px;margin-top:8px
+}
+.sticky-icon{font-size:16px}
+.sticky-text{font-size:10px;color:#4A6080;line-height:1.4}
+.sticky-text strong{color:#00C8FF}
+
+/* ─ Section Headers ─ */
+.sec-eyebrow{font-size:10px;font-weight:500;color:#00C8FF;letter-spacing:2px;text-transform:uppercase;margin-bottom:8px;display:flex;align-items:center;gap:6px}
+.sec-eyebrow::before{content:'//';opacity:.4}
+.sec-h2{font-size:22px;font-weight:700;color:#E2EAF4;margin-bottom:8px;letter-spacing:-.01em}
+.sec-sub{font-size:12px;color:#4A6080;line-height:1.7;max-width:520px;margin-bottom:24px}
+
+/* ─ Meta ─ */
+.page-title{font-size:11px;font-weight:600;color:#00C8FF;text-transform:uppercase;letter-spacing:.12em;text-align:center;padding:20px 0 12px;border-bottom:1px solid #111E32;margin-bottom:24px}
+.approve-bar{
+  display:flex;gap:12px;margin-top:28px;padding-top:20px;border-top:1px solid #111E32
+}
+.btn-approve{
+  flex:1;background:#00C8FF;color:#000;font-weight:700;font-size:12px;
+  padding:12px;border-radius:8px;text-align:center;cursor:pointer;border:none
+}
+.btn-change{
+  flex:1;background:#111E32;color:#7ab3d4;font-size:12px;
+  padding:12px;border-radius:8px;text-align:center;cursor:pointer;border:1px solid #1E2F47
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+<div class="page-title">PROPUESTA — index.html rediseño $30K · Revisa cada sección y aprueba abajo</div>
+
+<!-- ══════════ HERO ══════════ -->
+<div class="section s-hero">
+  <div class="section-inner">
+    <div class="section-tag"><span class="cyan">1 ─ HERO</span> <span class="label-improved">mejorado</span></div>
+    <div class="hero-layout">
+      <div>
+        <div class="badge-pill"><div class="badge-dot"></div> Sistema Operativo · En Vivo en 7 Días</div>
+        <div class="hero-h1">Su negocio pierde <span class="grad">ingresos reales</span> por procesos que se detienen cuando usted descansa.</div>
+        <div class="hero-sub">Instalamos sistemas de automatización operacional que trabajan 24/7 — sin personal extra, sin cambiar lo que ya funciona. Documentado y medible desde la primera semana.</div>
+        <div class="cta-row">
+          <div class="btn-wa"><span class="btn-wa-icon">📲</span> Hablar por WhatsApp</div>
+          <div class="btn-sec">Ver cómo funciona →</div>
+        </div>
+      </div>
+      <div class="hero-3d-box">
+        <div class="hero-3d-label mono">Sistema · Activo 24/7</div>
+        <div style="position:relative;width:140px;height:140px">
+          <div class="hero-3d-sphere"></div>
+          <div class="hero-3d-ring"></div>
+          <div class="hero-3d-ring2"></div>
+        </div>
+        <div class="float-stat-box" style="position:absolute;top:16px;right:-8px">
+          <div class="fsb-num">7<span style="font-size:11px">días</span></div>
+          <div class="fsb-lbl">Implementación garantizada</div>
+        </div>
+        <div class="float-stat-box" style="position:absolute;bottom:16px;left:-8px">
+          <div class="fsb-num">24/7</div>
+          <div class="fsb-lbl">Operando sin parar</div>
+        </div>
+      </div>
+    </div>
+    <div style="margin-top:16px;padding:10px 14px;background:#0a1020;border:1px solid rgba(0,200,255,.08);border-radius:8px;font-size:10px;color:#2a4a6a">
+      🎯 <strong style="color:#00C8FF">Cambio de copy clave:</strong> El badge ya no dice "Firmas Legales" — ahora la propuesta es para TODAS las industrias. El hero es genérico pero concreto.
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ TRUST BAR ══════════ -->
+<div class="section s-trust">
+  <div class="section-inner" style="padding:20px 28px">
+    <div class="section-tag"><span class="cyan">2 ─ TRUST BAR</span> <span class="label-new">nuevo</span></div>
+    <div class="trust-grid">
+      <div class="trust-stat">
+        <div class="trust-num mono">7</div>
+        <div class="trust-lbl">días de implementación</div>
+      </div>
+      <div class="trust-divider"></div>
+      <div class="trust-stat">
+        <div class="trust-num mono">4</div>
+        <div class="trust-lbl">industrias atendidas</div>
+      </div>
+      <div class="trust-divider"></div>
+      <div class="trust-stat">
+        <div class="trust-num mono">24/7</div>
+        <div class="trust-lbl">operación continua</div>
+      </div>
+      <div class="trust-divider"></div>
+      <div class="trust-stat">
+        <div class="trust-num mono">45'</div>
+        <div class="trust-lbl">auditoría gratuita</div>
+      </div>
+    </div>
+    <div style="margin-top:12px;font-size:9px;color:#1a3a1a;text-align:center;font-style:italic">Nota: estadísticas de capacidad operativa, no de clientes históricos — honesto y verificable desde día 1</div>
+  </div>
+</div>
+
+<!-- ══════════ PROBLEMA / SOLUCIÓN ══════════ -->
+<div class="section s-problem">
+  <div class="section-inner">
+    <div class="section-tag"><span class="cyan">3 ─ PROBLEMA / SOLUCIÓN</span> <span class="label-kept">se mantiene</span></div>
+    <div class="sec-eyebrow">El problema que resolvemos</div>
+    <div class="sec-h2">Pierde clientes cuando su equipo no puede responder.</div>
+    <div class="problem-grid">
+      <div class="prob-card prob-card-red">
+        <h4 style="color:#FF3B6B">Sin S.P.M. Advisory</h4>
+        <div class="prob-item"><span class="icon-x">✕</span> Llamadas sin respuesta fuera de horario — el prospecto llama a la competencia</div>
+        <div class="prob-item"><span class="icon-x">✕</span> Leads que se enfrían porque el seguimiento tarda 24+ horas</div>
+        <div class="prob-item"><span class="icon-x">✕</span> Operación que duerme — usted también, pero sus ingresos no</div>
+      </div>
+      <div class="prob-card prob-card-cyan">
+        <h4 style="color:#00C8FF">Con S.P.M. Advisory</h4>
+        <div class="prob-item"><span class="icon-check">✓</span> Sistema responde, agenda y califica prospectos sin parar — sin contratar nadie</div>
+        <div class="prob-item"><span class="icon-check">✓</span> Cada lead recibe respuesta en menos de 5 minutos. La conversión sube.</div>
+        <div class="prob-item"><span class="icon-check">✓</span> ROI visible en la primera semana. Documentado. Medible.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ CÓMO FUNCIONA ══════════ -->
+<div class="section s-how">
+  <div class="section-inner">
+    <div class="section-tag"><span class="cyan">4 ─ CÓMO FUNCIONA</span> <span class="label-new">nuevo</span></div>
+    <div class="sec-eyebrow">El proceso</div>
+    <div class="sec-h2">De la auditoría al sistema activo en 7 días.</div>
+    <div class="how-cards">
+      <div class="how-card" data-n="1">
+        <div class="how-icon">🔍</div>
+        <div class="how-phase mono">Fase 1 · Día 1</div>
+        <div class="how-title">Auditoría de 45 Minutos</div>
+        <div class="how-desc">Mapeamos exactamente dónde se están yendo su tiempo y su dinero. Le mostramos el costo real en números concretos.</div>
+        <div class="how-tag">✓ Gratis · Sin compromiso</div>
+      </div>
+      <div class="how-card" data-n="2">
+        <div class="how-icon">⚙️</div>
+        <div class="how-phase mono">Fase 2 · Días 2–5</div>
+        <div class="how-title">Instalación del Sistema</div>
+        <div class="how-desc">Configuramos e integramos con sus canales actuales — WhatsApp, correo, agenda. Sin interrumpir su operación. Sin capacitar a su equipo.</div>
+        <div class="how-tag">✓ En vivo en 5 días hábiles</div>
+      </div>
+      <div class="how-card" data-n="3">
+        <div class="how-icon">📈</div>
+        <div class="how-phase mono">Fase 3 · Día 7</div>
+        <div class="how-title">Resultados Medibles</div>
+        <div class="how-desc">Sistema activo 24/7. Dashboard con métricas en tiempo real. Usted ve exactamente qué está capturando — y cuánto está recuperando.</div>
+        <div class="how-tag">✓ ROI visible desde semana 1</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ INDUSTRIAS con ejemplos ══════════ -->
+<div class="section s-industries">
+  <div class="section-inner">
+    <div class="section-tag"><span class="cyan">5 ─ INDUSTRIAS</span> <span class="label-improved">mejorado · con ejemplo por sector</span></div>
+    <div class="sec-eyebrow">Soluciones por industria</div>
+    <div class="sec-h2">Sistemas calibrados para su sector.</div>
+    <div class="ind-grid">
+
+      <div class="ind-card">
+        <div class="ind-icon-box">⚕️</div>
+        <div class="ind-title">Salud Privada y Med Spas</div>
+        <div class="ind-desc">Recepcionista 24/7 que agenda citas, reduce no-shows y no toma vacaciones.</div>
+        <div class="ind-example">
+          <div class="ind-example-icon">↑</div>
+          <div class="ind-example-text">Clínica estética recuperó <span class="ind-example-metric">+40% de llamadas perdidas</span> en 3 semanas — sin contratar recepcionista adicional.</div>
+        </div>
+        <div class="ind-link">Ver solución →</div>
+      </div>
+
+      <div class="ind-card">
+        <div class="ind-icon-box">🏠</div>
+        <div class="ind-title">Bienes Raíces e Inmobiliarias</div>
+        <div class="ind-desc">Calificación automática de compradores. Usted solo cierra ventas.</div>
+        <div class="ind-example">
+          <div class="ind-example-icon">↑</div>
+          <div class="ind-example-text">Inmobiliaria regional recuperó <span class="ind-example-metric">12h/semana</span> eliminando filtrado manual de prospectos no calificados.</div>
+        </div>
+        <div class="ind-link">Ver solución →</div>
+      </div>
+
+      <div class="ind-card">
+        <div class="ind-icon-box">⚖️</div>
+        <div class="ind-title">Firmas Legales y Abogados</div>
+        <div class="ind-desc">Admisión inteligente. Solo casos relevantes llegan al abogado.</div>
+        <div class="ind-example">
+          <div class="ind-example-icon">↓</div>
+          <div class="ind-example-text">Bufete familiar redujo <span class="ind-example-metric">-65% consultas irrelevantes</span> en el primer mes, liberando 8h/sem del socio principal.</div>
+        </div>
+        <div class="ind-link">Ver solución →</div>
+      </div>
+
+      <div class="ind-card">
+        <div class="ind-icon-box">🍽️</div>
+        <div class="ind-title">Restaurantes</div>
+        <div class="ind-desc">Reservas automáticas por WhatsApp. Recordatorios que eliminan no-shows.</div>
+        <div class="ind-example">
+          <div class="ind-example-icon">↓</div>
+          <div class="ind-example-text">Restaurante de 40 mesas eliminó <span class="ind-example-metric">-60% de no-shows</span> en 30 días con recordatorios automáticos pre-reserva.</div>
+        </div>
+        <div class="ind-link">Ver solución →</div>
+      </div>
+
+    </div>
+    <div style="margin-top:12px;font-size:9px;color:#1a3a1a;font-style:italic">* Ejemplos ilustrativos — resultados típicos del sistema basados en benchmarks de industria</div>
+  </div>
+</div>
+
+<!-- ══════════ SOCIAL PROOF ══════════ -->
+<div class="section s-proof">
+  <div class="section-inner">
+    <div class="section-tag"><span class="cyan">6 ─ TESTIMONIOS / CASOS</span> <span class="label-kept">se mantiene · marcados como ilustrativos</span></div>
+    <div class="sec-eyebrow">Resultados del sistema</div>
+    <div class="sec-h2">Lo que el sistema hace — en números.</div>
+    <div class="proof-grid">
+      <div class="proof-card">
+        <div class="proof-quote">"En 3 semanas recuperamos el 40% de las llamadas que antes se perdían. El sistema no descansa y mis pacientes tienen respuesta inmediata."</div>
+        <div class="proof-meta">
+          <div class="proof-avatar">MC</div>
+          <div>
+            <div class="proof-name">Dra. María Castillo</div>
+            <div class="proof-role">Clínica Derma Vital</div>
+            <div class="proof-badge">+40% llamadas recuperadas</div>
+          </div>
+        </div>
+        <div class="proof-note">* Resultado ilustrativo — basado en capacidad típica del sistema</div>
+      </div>
+      <div class="proof-card">
+        <div class="proof-quote">"Implementaron el sistema en 5 días. En el primer mes, los no-shows cayeron un 60%. El ROI fue evidente desde la semana dos."</div>
+        <div class="proof-meta">
+          <div class="proof-avatar">AG</div>
+          <div>
+            <div class="proof-name">Andrés García</div>
+            <div class="proof-role">Restaurante La Terraza</div>
+            <div class="proof-badge">-60% no-shows</div>
+          </div>
+        </div>
+        <div class="proof-note">* Resultado ilustrativo — basado en capacidad típica del sistema</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ GARANTÍA SUAVE ══════════ -->
+<div class="section s-guarantee">
+  <div class="section-inner">
+    <div class="section-tag"><span class="cyan">7 ─ GARANTÍA SUAVE</span> <span class="label-new">nuevo</span></div>
+    <div class="guarantee-box">
+      <div class="guarantee-icon">🛡️</div>
+      <div>
+        <div class="guarantee-h">Sin riesgo para empezar.</div>
+        <div class="guarantee-p">La auditoría de diagnóstico es completamente gratuita y sin compromiso de contratación. En 45 minutos le mostramos exactamente dónde está perdiendo ingresos — y cuánto. Si no ve valor en el diagnóstico, no hay nada que decidir. Sin pitch, sin presión.</div>
+        <div class="guarantee-pills">
+          <div class="g-pill">✓ Diagnóstico gratuito</div>
+          <div class="g-pill">✓ 45 minutos</div>
+          <div class="g-pill">✓ Sin compromiso de contratación</div>
+          <div class="g-pill">✓ Sin pitch de ventas</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ CTA DUAL ══════════ -->
+<div class="section s-cta">
+  <div class="section-inner">
+    <div class="section-tag"><span class="cyan">8 ─ CTA FINAL</span> <span class="label-improved">mejorado · WhatsApp primario + form secundario</span></div>
+    <div class="cta-grid">
+      <div class="cta-left">
+        <div class="sec-eyebrow">Dé el primer paso</div>
+        <h3 class="cta-left" style="font-size:20px;font-weight:700;color:#E2EAF4;margin-bottom:12px">¿Cuánto le cuesta cada hora de operación manual?</h3>
+        <p style="font-size:12px;color:#4A6080;line-height:1.7;margin-bottom:20px">Reserve su auditoría gratuita de 45 minutos. Diagnóstico real — sin compromiso, sin pitch de ventas.</p>
+        <div class="cta-wa-big">
+          <span style="font-size:22px">📲</span>
+          <div>
+            Hablar por WhatsApp
+            <span class="cta-wa-sub">Respuesta en menos de 4 horas hábiles</span>
+          </div>
+        </div>
+        <div class="sticky-callout">
+          <div class="sticky-icon">📌</div>
+          <div class="sticky-text"><strong>Mobile:</strong> Sticky bar inferior fijo con el botón de WhatsApp siempre visible mientras el usuario hace scroll.</div>
+        </div>
+      </div>
+      <div>
+        <div class="cta-form-card">
+          <h4>O déjenos sus datos</h4>
+          <div class="fake-input">Nombre completo</div>
+          <div class="fake-input">Empresa</div>
+          <div class="fake-input">Industria ▾</div>
+          <div class="fake-input">WhatsApp</div>
+          <div class="fake-input">Mayor dolor operativo ▾</div>
+          <div class="fake-btn">Solicitar Auditoría Gratuita →</div>
+          <div class="form-alt-note">Respondemos en menos de 4h hábiles · Sin compromiso</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ APPROVE ══════════ -->
+<div class="approve-bar">
+  <button class="btn-approve" data-choice="approved" onclick="choose(this)">✓ Apruebo — implementar esta estructura</button>
+  <button class="btn-change" data-choice="adjust" onclick="choose(this)">± Quiero ajustar algo</button>
+</div>
+</div>
+
+<script>
+function choose(el){
+  document.querySelectorAll('.btn-approve,.btn-change').forEach(b=>{b.style.opacity='.4'});
+  el.style.opacity='1';el.style.outline='2px solid #00C8FF';
+  if(window.recordChoice) recordChoice(el.dataset.choice, el.textContent.trim());
+}
+</script>
+</body>
+</html>

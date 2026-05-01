@@ -11,33 +11,100 @@
 (function () {
   'use strict';
 
-  // ---------- SCROLL REVEAL ----------
-  const io = new IntersectionObserver((entries) => {
-    entries.forEach((e) => {
-      if (e.isIntersecting) {
-        e.target.classList.add('in');
-        io.unobserve(e.target);
-      }
-    });
-  }, { threshold: 0, rootMargin: '0px 0px -40px 0px' });
+  // ---------- GSAP SCROLL MOTION ----------
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  function initReveal() {
+  function initFallbackReveal() {
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
+        if (e.isIntersecting) {
+          e.target.classList.add('in');
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0, rootMargin: '0px 0px -40px 0px' });
+
     const vh = window.innerHeight;
     document.querySelectorAll('[data-reveal]').forEach((el) => {
       const r = el.getBoundingClientRect();
-      // If already in the viewport on load, reveal immediately (with its delay)
       if (r.top < vh - 40 && r.bottom > 0) {
-        // small stagger so it feels sequenced rather than flashing in
         requestAnimationFrame(() => el.classList.add('in'));
       } else {
         io.observe(el);
       }
     });
   }
+
+  function initGsapMotion() {
+    if (!window.gsap || !window.ScrollTrigger || prefersReducedMotion) {
+      initFallbackReveal();
+      return;
+    }
+
+    gsap.registerPlugin(ScrollTrigger);
+    gsap.defaults({ ease: 'power3.out' });
+
+    document.querySelectorAll('[data-reveal]').forEach((el) => {
+      if (el.matches('[data-stagger]')) return;
+      const isSlow = el.dataset.reveal === 'slow';
+      const isFade = el.dataset.reveal === 'fade';
+      gsap.fromTo(el,
+        { autoAlpha: 0, y: isFade ? 0 : 28 },
+        {
+          autoAlpha: 1,
+          y: 0,
+          duration: isSlow ? 1.15 : 0.82,
+          clearProps: 'transform,opacity,visibility',
+          onComplete: () => el.classList.add('in'),
+          scrollTrigger: {
+            trigger: el,
+            start: 'top 84%',
+            once: true
+          }
+        }
+      );
+    });
+
+    document.querySelectorAll('[data-stagger]').forEach((group) => {
+      const items = gsap.utils.toArray(group.children);
+      if (!items.length) return;
+      gsap.set(group, { autoAlpha: 1, y: 0 });
+      gsap.fromTo(items,
+        { autoAlpha: 0, y: 26 },
+        {
+          autoAlpha: 1,
+          y: 0,
+          duration: 0.72,
+          stagger: 0.09,
+          clearProps: 'transform,opacity,visibility',
+          onComplete: () => group.classList.add('in'),
+          scrollTrigger: {
+            trigger: group,
+            start: 'top 82%',
+            once: true
+          }
+        }
+      );
+    });
+
+    gsap.utils.toArray('.mp-chart, #costTotal, .form-head').forEach((el) => {
+      gsap.to(el, {
+        yPercent: -8,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: el,
+          start: 'top bottom',
+          end: 'bottom top',
+          scrub: 0.8
+        }
+      });
+    });
+  }
+
   if (document.readyState === 'complete' || document.readyState === 'interactive') {
-    requestAnimationFrame(initReveal);
+    requestAnimationFrame(initGsapMotion);
   } else {
-    window.addEventListener('DOMContentLoaded', () => requestAnimationFrame(initReveal));
+    window.addEventListener('DOMContentLoaded', () => requestAnimationFrame(initGsapMotion));
   }
 
   // ---------- MOBILE NAV ----------
@@ -88,32 +155,32 @@
   // ---------- HERO METRIC + SPARKLINE ----------
   const metricConfigs = {
     recovered: {
-      label: 'Conversión promedio · vs. sitio anterior',
-      value: 127,
-      suffix: '%',
-      delta: 18.4,
-      points: [20, 35, 55, 68, 80, 92, 100, 110, 118, 124, 127]
-    },
-    calls: {
-      label: 'Proyectos entregados · desde 2024',
-      value: 48,
-      suffix: '',
-      delta: 6.0,
-      points: [5, 10, 16, 20, 26, 31, 36, 40, 43, 46, 48]
-    },
-    hours: {
-      label: 'Días promedio de entrega',
+      label: 'Entrega pactada · primer lanzamiento',
       value: 14,
       suffix: 'd',
-      delta: -2.1,
-      points: [28, 25, 22, 20, 19, 17, 16, 15, 14, 14, 14]
+      delta: 0,
+      points: [28, 25, 22, 20, 18, 16, 15, 14, 14, 14, 14]
+    },
+    calls: {
+      label: 'Sectores con estructura preparada',
+      value: 4,
+      suffix: '',
+      delta: 0,
+      points: [1, 1, 2, 2, 3, 3, 4, 4, 4, 4, 4]
+    },
+    hours: {
+      label: 'Revisiones incluidas hasta aprobación',
+      value: 100,
+      suffix: '%',
+      delta: 0,
+      points: [40, 48, 56, 64, 72, 80, 88, 94, 98, 100, 100]
     },
     roi: {
-      label: 'Satisfacción de clientes · NPS',
-      value: 98,
-      suffix: '%',
-      delta: 1.2,
-      points: [80, 84, 87, 90, 92, 94, 95, 96, 97, 98, 98]
+      label: 'Clientes ficticios usados como prueba',
+      value: 0,
+      suffix: '',
+      delta: 0,
+      points: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
     }
   };
 
@@ -197,9 +264,9 @@
 
   // ---------- TICKER ----------
   const tickerTargets = [
-    { el: document.getElementById('tk1'), to: 184, dec: 0 },
-    { el: document.getElementById('tk2'), to: 2470, dec: 0 },
-    { el: document.getElementById('tk3'), to: 126, dec: 0 }
+    { el: document.getElementById('tk1'), to: 1, dec: 0 },
+    { el: document.getElementById('tk2'), to: 4, dec: 0 },
+    { el: document.getElementById('tk3'), to: 14, dec: 0 }
   ];
   setTimeout(() => {
     tickerTargets.forEach((t) => {
@@ -213,20 +280,55 @@
     const costIo = new IntersectionObserver((entries) => {
       entries.forEach((e) => {
         if (e.isIntersecting) {
-          const start = performance.now();
-          function step(now) {
-            const t = Math.min(1, (now - start) / 1400);
-            const v = Math.round(lerp(0, 340000, easeOut(t)));
-            costEl.textContent = '$' + v.toLocaleString('en-US');
-            if (t < 1) requestAnimationFrame(step);
-          }
-          requestAnimationFrame(step);
+          animateNumber(costEl, 0, 0, 400);
           costIo.unobserve(e.target);
         }
       });
     }, { threshold: 0.4 });
     costIo.observe(costEl);
   }
+
+  // ---------- DELIVERY STACK ----------
+  document.querySelectorAll('[data-flow-stack]').forEach((flow) => {
+    const rows = Array.from(flow.querySelectorAll('.flow-row'));
+    const hub = flow.querySelector('.flow-hub');
+    const hubText = flow.querySelector('[data-flow-hub-text]');
+    if (!rows.length || !hub || !hubText) return;
+
+    function activate(row) {
+      rows.forEach((item) => {
+        const active = item === row;
+        item.classList.toggle('is-active', active);
+        item.setAttribute('aria-pressed', String(active));
+      });
+      flow.classList.add('is-dimmed');
+      hub.classList.add('is-active');
+      hubText.textContent = (row.dataset.flowLabel || row.querySelector('.act')?.textContent || '').toUpperCase();
+    }
+
+    function clear() {
+      flow.classList.remove('is-dimmed');
+      hub.classList.remove('is-active');
+    }
+
+    rows.forEach((row) => {
+      row.setAttribute('aria-pressed', String(row.classList.contains('is-active')));
+      row.addEventListener('mouseenter', () => activate(row));
+      row.addEventListener('focus', () => activate(row));
+      row.addEventListener('click', () => activate(row));
+      row.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          activate(row);
+        }
+      });
+    });
+
+    flow.addEventListener('mouseleave', clear);
+    flow.addEventListener('focusout', (e) => {
+      if (!flow.contains(e.relatedTarget)) clear();
+    });
+  });
 
   // ---------- FAQ ----------
   document.querySelectorAll('[data-faq]').forEach((item) => {
@@ -280,8 +382,8 @@
     e.preventDefault();
     if (stepIdx === 1) {
       if (!validate(step1)) return;
-      step1.style.display = 'none';
-      step2.style.display = 'block';
+      step1.hidden = true;
+      step2.hidden = false;
       formBtn.innerHTML = 'Enviar solicitud <span class="arr">→</span>';
       formStepLabel.textContent = 'Paso 2 / 2';
       stepIdx = 2;
@@ -358,8 +460,8 @@
       s: 'Diseño UI/UX de alto estándar que posiciona tu marca como líder antes de que el prospecto lea una sola palabra. Lanzamos en 14 días, con garantía de revisiones ilimitadas.'
     },
     C: {
-      h: 'Convierte el 127% más con un diseño que <em>trabaja mientras duermes.</em>',
-      s: 'Un sitio premium + chatbot IA que califica leads, responde dudas y agenda citas — las 24 horas. Más de 48 proyectos entregados. Tiempo de entrega promedio: 14 días.'
+      h: 'Tu primera web seria puede ser <em>la prueba de tu calidad.</em>',
+      s: 'Construimos una presencia premium que muestra autoridad desde el primer clic: diseño, copy, chatbot y medición listos para empezar a vender sin inventar trayectoria.'
     }
   };
 

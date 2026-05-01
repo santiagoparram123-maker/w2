@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>¿Cómo Funciona? — Opciones de Layout</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #111; color: #f0ede8; font-family: Inter, system-ui, sans-serif; padding: 32px 24px; }
+  h1 { font-size: 1.1rem; font-weight: 600; color: #C49A4A; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 6px; }
+  .subtitle { color: #888; font-size: 0.9rem; margin-bottom: 36px; }
+
+  .options { display: flex; flex-direction: column; gap: 28px; }
+
+  .option {
+    border: 1.5px solid #2a2a2a;
+    border-radius: 12px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .option:hover { border-color: #C49A4A44; }
+  .option.selected { border-color: #C49A4A; box-shadow: 0 0 0 3px #C49A4A22; }
+
+  .option-label {
+    display: flex; align-items: center; gap: 12px;
+    padding: 14px 20px;
+    background: #1a1a1a;
+    border-bottom: 1px solid #2a2a2a;
+  }
+  .letter {
+    width: 28px; height: 28px; border-radius: 50%;
+    background: #C49A4A22; color: #C49A4A;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 0.8rem; flex-shrink: 0;
+  }
+  .option-label h3 { font-size: 0.95rem; font-weight: 600; }
+  .option-label p { font-size: 0.8rem; color: #777; margin-top: 1px; }
+
+  .preview { padding: 24px 20px; background: #161616; }
+
+  /* ── OPTION A: Horizontal timeline ── */
+  .timeline-h {
+    display: flex; align-items: flex-start; gap: 0;
+    position: relative;
+  }
+  .timeline-h::before {
+    content: '';
+    position: absolute;
+    top: 20px; left: 20px; right: 20px;
+    height: 2px; background: linear-gradient(90deg, #C49A4A, #C49A4A88, #C49A4A22);
+    z-index: 0;
+  }
+  .tl-step {
+    flex: 1; display: flex; flex-direction: column; align-items: center;
+    text-align: center; position: relative; z-index: 1;
+  }
+  .tl-num {
+    width: 40px; height: 40px; border-radius: 50%;
+    background: #0A0A0A; border: 2px solid #C49A4A;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 0.85rem; color: #C49A4A;
+    margin-bottom: 12px;
+  }
+  .tl-step:nth-child(2) .tl-num { background: #C49A4A; color: #000; }
+  .tl-title { font-size: 0.78rem; font-weight: 600; color: #f0ede8; margin-bottom: 4px; }
+  .tl-desc { font-size: 0.7rem; color: #666; line-height: 1.4; padding: 0 4px; }
+  .tl-badge {
+    display: inline-block; margin-bottom: 8px;
+    background: #C49A4A22; color: #C49A4A;
+    font-size: 0.65rem; padding: 2px 8px; border-radius: 20px;
+    font-family: 'JetBrains Mono', monospace; letter-spacing: 0.05em;
+  }
+
+  /* ── OPTION B: Vertical accordion-style ── */
+  .steps-v { display: flex; flex-direction: column; gap: 0; }
+  .step-v {
+    display: flex; gap: 16px; padding: 16px 0;
+    border-bottom: 1px solid #222;
+    position: relative;
+  }
+  .step-v:last-child { border-bottom: none; }
+  .step-v-left { display: flex; flex-direction: column; align-items: center; flex-shrink: 0; }
+  .step-v-num {
+    width: 36px; height: 36px; border-radius: 50%;
+    border: 2px solid #C49A4A33;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.8rem; font-weight: 700; color: #C49A4A;
+    flex-shrink: 0;
+  }
+  .step-v:first-child .step-v-num { background: #C49A4A; color: #000; border-color: #C49A4A; }
+  .step-v-line {
+    width: 1px; flex: 1; background: #C49A4A22; margin-top: 6px;
+  }
+  .step-v:last-child .step-v-line { display: none; }
+  .step-v-content { padding-top: 6px; }
+  .step-v-tag { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.1em; color: #C49A4A; margin-bottom: 4px; }
+  .step-v-title { font-size: 0.9rem; font-weight: 600; margin-bottom: 4px; }
+  .step-v-desc { font-size: 0.75rem; color: #777; line-height: 1.5; }
+  .step-v-result {
+    display: inline-flex; align-items: center; gap: 6px;
+    margin-top: 8px; background: #0d1f0d; border: 1px solid #1a4d1a;
+    padding: 4px 10px; border-radius: 6px;
+    font-size: 0.7rem; color: #4caf50;
+  }
+
+  /* ── OPTION C: Cards with outcome highlight ── */
+  .steps-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+  .step-card {
+    background: #1a1a1a; border: 1px solid #2a2a2a;
+    border-radius: 10px; padding: 16px; position: relative;
+    overflow: hidden;
+  }
+  .step-card::before {
+    content: attr(data-n);
+    position: absolute; top: -8px; right: 10px;
+    font-size: 4rem; font-weight: 900; color: #C49A4A0a;
+    line-height: 1; font-family: Inter, sans-serif;
+  }
+  .step-card-icon {
+    font-size: 1.4rem; margin-bottom: 10px;
+  }
+  .step-card-phase {
+    font-size: 0.6rem; text-transform: uppercase; letter-spacing: 0.12em;
+    color: #C49A4A; margin-bottom: 6px;
+  }
+  .step-card-title { font-size: 0.85rem; font-weight: 700; margin-bottom: 6px; }
+  .step-card-desc { font-size: 0.7rem; color: #666; line-height: 1.5; }
+  .step-card-outcome {
+    margin-top: 12px; padding-top: 10px; border-top: 1px solid #2a2a2a;
+    font-size: 0.7rem; color: #C49A4A; font-weight: 600;
+  }
+  .step-card:nth-child(2) { border-color: #C49A4A44; }
+
+  .select-hint { text-align: center; margin-top: 32px; font-size: 0.8rem; color: #555; }
+</style>
+</head>
+<body>
+
+<h1>¿Cómo Funciona? — Layout de la sección</h1>
+<p class="subtitle">Selecciona el enfoque visual que mejor comunica el proceso de venta</p>
+
+<div class="options">
+
+  <!-- OPTION A -->
+  <div class="option" data-choice="a" onclick="toggleSelect(this)">
+    <div class="option-label">
+      <div class="letter">A</div>
+      <div>
+        <h3>Timeline horizontal con pasos numerados</h3>
+        <p>Flujo lineal izquierda → derecha. Muy claro, visual, fácil de escanear.</p>
+      </div>
+    </div>
+    <div class="preview">
+      <div class="timeline-h">
+        <div class="tl-step">
+          <div class="tl-num">1</div>
+          <div class="tl-badge">Día 1</div>
+          <div class="tl-title">Auditoría Gratuita</div>
+          <div class="tl-desc">45 min. Mapeamos sus cuellos de botella actuales y calculamos el costo real.</div>
+        </div>
+        <div class="tl-step">
+          <div class="tl-num">2</div>
+          <div class="tl-badge">Días 2–5</div>
+          <div class="tl-title">Instalación del Sistema</div>
+          <div class="tl-desc">Configuramos e integramos con sus canales actuales. Sin cambiar lo que ya funciona.</div>
+        </div>
+        <div class="tl-step">
+          <div class="tl-num">3</div>
+          <div class="tl-badge">Día 7</div>
+          <div class="tl-title">Sistema Activo</div>
+          <div class="tl-desc">Operando 24/7. Usted ve los primeros resultados en la primera semana.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- OPTION B -->
+  <div class="option" data-choice="b" onclick="toggleSelect(this)">
+    <div class="option-label">
+      <div class="letter">B</div>
+      <div>
+        <h3>Vertical con resultado concreto por paso</h3>
+        <p>Cada paso muestra qué cambia específicamente. Más detalle, mayor credibilidad.</p>
+      </div>
+    </div>
+    <div class="preview">
+      <div class="steps-v">
+        <div class="step-v">
+          <div class="step-v-left">
+            <div class="step-v-num">1</div>
+            <div class="step-v-line"></div>
+          </div>
+          <div class="step-v-content">
+            <div class="step-v-tag">Semana 1 · Auditoría</div>
+            <div class="step-v-title">Mapeamos el costo oculto</div>
+            <div class="step-v-desc">Calculamos cuánto pierde por semana en operaciones manuales. La auditoría es gratuita y toma 45 minutos.</div>
+            <div class="step-v-result">✓ Entrega: reporte de diagnóstico con número concreto</div>
+          </div>
+        </div>
+        <div class="step-v">
+          <div class="step-v-left">
+            <div class="step-v-num">2</div>
+            <div class="step-v-line"></div>
+          </div>
+          <div class="step-v-content">
+            <div class="step-v-tag">Días 2–5 · Instalación</div>
+            <div class="step-v-title">Instalamos sin interrumpir su operación</div>
+            <div class="step-v-desc">Conectamos el sistema a sus canales actuales (WhatsApp, correo, agenda). Sin capacitación extra para su equipo.</div>
+            <div class="step-v-result">✓ Entrega: sistema configurado y probado</div>
+          </div>
+        </div>
+        <div class="step-v">
+          <div class="step-v-left">
+            <div class="step-v-num">3</div>
+            <div class="step-v-line"></div>
+          </div>
+          <div class="step-v-content">
+            <div class="step-v-tag">Día 7 · Resultado</div>
+            <div class="step-v-title">Operando. Midiendo. Mejorando.</div>
+            <div class="step-v-desc">Dashboard con métricas en tiempo real. Usted ve exactamente qué está pasando — y cuánto está recuperando.</div>
+            <div class="step-v-result">✓ Entrega: reporte de primera semana con ROI inicial</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- OPTION C -->
+  <div class="option" data-choice="c" onclick="toggleSelect(this)">
+    <div class="option-label">
+      <div class="letter">C</div>
+      <div>
+        <h3>Cards con resultado destacado por fase</h3>
+        <p>3 tarjetas paralelas. Diseño moderno, fácil de escanear, ideal para mobile.</p>
+      </div>
+    </div>
+    <div class="preview">
+      <div class="steps-cards">
+        <div class="step-card" data-n="1">
+          <div class="step-card-icon">🔍</div>
+          <div class="step-card-phase">Fase 1 · Día 1</div>
+          <div class="step-card-title">Auditoría Diagnóstica</div>
+          <div class="step-card-desc">45 minutos. Identificamos exactamente dónde se están yendo su tiempo y su dinero.</div>
+          <div class="step-card-outcome">→ Gratis, sin compromiso</div>
+        </div>
+        <div class="step-card" data-n="2">
+          <div class="step-card-icon">⚙️</div>
+          <div class="step-card-phase">Fase 2 · Días 2–5</div>
+          <div class="step-card-title">Instalación del Sistema</div>
+          <div class="step-card-desc">Configuramos todo. Sin interrumpir su operación actual. Sin capacitación de su equipo.</div>
+          <div class="step-card-outcome">→ En vivo en 5 días</div>
+        </div>
+        <div class="step-card" data-n="3">
+          <div class="step-card-icon">📈</div>
+          <div class="step-card-phase">Fase 3 · Día 7</div>
+          <div class="step-card-title">Resultados Medibles</div>
+          <div class="step-card-desc">Sistema activo 24/7. Dashboard con métricas reales. ROI visible desde la primera semana.</div>
+          <div class="step-card-outcome">→ Garantía de resultados</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<p class="select-hint">Haz clic en una opción para seleccionarla → luego responde en la terminal</p>
+
+<script>
+function toggleSelect(el) {
+  const wasSelected = el.classList.contains('selected');
+  document.querySelectorAll('.option').forEach(o => o.classList.remove('selected'));
+  if (!wasSelected) {
+    el.classList.add('selected');
+    const choice = el.dataset.choice;
+    const text = el.querySelector('h3').textContent;
+    if (window.recordChoice) recordChoice(choice, text);
+  }
+}
+</script>
+
+</body>
+</html>
