@@ -23,7 +23,7 @@ Plataforma web de alto estándar ($10k USD). Herramienta operativa orientada a l
 ### Reglas Estrictas de UI/UX
 - PROHIBIDO diseño genérico. Cada elemento tiene intención documentada.
 - Sistema de design tokens: ningún color o tamaño hardcodeado fuera de `:root`.
-- Minimalista e intencional. Espacios en blanco son diseño, no vacío.
+- Minimalista e intencional.
 - Todo el marcado es semántico (`<nav>`, `<main>`, `<article>`, `<aside>`, `<section>`).
 - WCAG AA obligatorio: contraste mínimo 4.5:1, focus-visible en todos los interactivos.
 - GEO (Generative Engine Optimization): cada sección tiene un `<p class="tldr">` con resumen directo para extracción por LLMs.

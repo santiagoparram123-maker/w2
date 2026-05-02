@@ -386,12 +386,88 @@
     requestAnimationFrame(step);
   }
 
+  function initSystemRebootScroll() {
+    const reboot = document.querySelector('[data-system-reboot]');
+    if (!reboot) return;
+
+    const clamp = (value, min = 0, max = 1) => Math.min(max, Math.max(min, value));
+    const easeInOut = (value) => {
+      const t = clamp(value);
+      return t * t * (3 - (2 * t));
+    };
+    const range = (start, end, value) => easeInOut((value - start) / (end - start));
+    const setVar = (name, value) => reboot.style.setProperty(name, String(value));
+
+    if (prefersReducedMotion) {
+      setVar('--legacy-opacity', 0);
+      setVar('--legacy-scale', 0.95);
+      setVar('--legacy-blur', '8px');
+      setVar('--premium-opacity', 1);
+      setVar('--premium-scale', 1);
+      setVar('--glow-opacity', 0.78);
+      setVar('--phase-legacy', 0);
+      setVar('--phase-shutdown', 0);
+      setVar('--phase-boot', 0);
+      setVar('--phase-final', 1);
+      setVar('--shutdown-y', '18px');
+      setVar('--boot-y', '18px');
+      setVar('--final-y', '0px');
+      setVar('--glow-scale', 1);
+      return;
+    }
+
+    let ticking = false;
+
+    function render() {
+      ticking = false;
+      const rect = reboot.getBoundingClientRect();
+      const travel = Math.max(1, reboot.offsetHeight - window.innerHeight);
+      const progress = clamp(-rect.top / travel);
+
+      const shutdown = range(0.25, 0.5, progress);
+      const boot = range(0.5, 0.75, progress);
+      const final = range(0.75, 1, progress);
+
+      const phaseLegacy = 1 - range(0.18, 0.32, progress);
+      const phaseShutdown = range(0.26, 0.39, progress) * (1 - range(0.47, 0.58, progress));
+      const phaseBoot = range(0.54, 0.66, progress) * (1 - range(0.72, 0.84, progress));
+      const phaseFinal = range(0.78, 0.92, progress);
+
+      setVar('--legacy-opacity', 1 - shutdown);
+      setVar('--legacy-scale', 1 - (shutdown * 0.05));
+      setVar('--legacy-blur', `${shutdown * 8}px`);
+      setVar('--legacy-gray', `${20 + (shutdown * 35)}%`);
+      setVar('--premium-opacity', boot);
+      setVar('--premium-scale', 1.1 - (boot * 0.1));
+      setVar('--glow-opacity', Math.max(boot * 0.86, final * 0.72));
+      setVar('--glow-scale', 0.86 + (Math.max(boot * 0.86, final * 0.72) * 0.18));
+      setVar('--phase-legacy', phaseLegacy);
+      setVar('--phase-shutdown', phaseShutdown);
+      setVar('--phase-boot', phaseBoot);
+      setVar('--phase-final', phaseFinal);
+      setVar('--shutdown-y', `${(1 - phaseShutdown) * 18}px`);
+      setVar('--boot-y', `${(1 - phaseBoot) * 18}px`);
+      setVar('--final-y', `${(1 - phaseFinal) * 18}px`);
+    }
+
+    function requestRender() {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(render);
+    }
+
+    render();
+    window.addEventListener('scroll', requestRender, { passive: true });
+    window.addEventListener('resize', requestRender);
+  }
+
   if (document.readyState === 'complete' || document.readyState === 'interactive') {
     requestAnimationFrame(initGsapMotion);
     requestAnimationFrame(initRealEstateFunnel);
     requestAnimationFrame(initHealthcareAgenda);
     requestAnimationFrame(initLegalCapture);
     requestAnimationFrame(initRestaurantFeed);
+    requestAnimationFrame(initSystemRebootScroll);
   } else {
     window.addEventListener('DOMContentLoaded', () => {
       requestAnimationFrame(initGsapMotion);
@@ -399,6 +475,7 @@
       requestAnimationFrame(initHealthcareAgenda);
       requestAnimationFrame(initLegalCapture);
       requestAnimationFrame(initRestaurantFeed);
+      requestAnimationFrame(initSystemRebootScroll);
     });
   }
 
@@ -427,13 +504,14 @@
   const nav = document.getElementById('nav');
   const hero = document.querySelector('.hero');
   const trust = document.querySelector('.trust');
+  const transformation = document.querySelector('.system-reboot');
   const industries = document.querySelector('.industries');
   const cta = document.querySelector('.cta');
 
   function updateNav() {
     const y = window.scrollY;
     // Dark over dark sections, light over light
-    const darkSections = [hero, trust, industries, cta].filter(Boolean);
+    const darkSections = [hero, trust, transformation, industries, cta].filter(Boolean);
     let overDark = false;
     darkSections.forEach((s) => {
       const r = s.getBoundingClientRect();

@@ -43,7 +43,7 @@ const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
 <!-- ============ NAV ============ -->
 <nav class="nav is-dark" id="nav">
   <div class="wrap">
-    <a href="#" class="logo">
+    <a href="./" class="logo">
       <span class="logo-mark" aria-hidden="true">
         <i class="on"><span>S</span></i><i></i><i class="gold"><span>P</span></i>
         <i></i><i><span>·</span></i><i></i>
@@ -215,6 +215,51 @@ const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
   </div>
 </section>
 
+<!-- ============ SECTOR MOCKUPS MARQUEE ============ -->
+<section class="portfolio-showcase" aria-label="Muestras sectoriales de S.P.M. Advisory">
+  <div class="wrap portfolio-strip-head" data-reveal>
+    <span class="eyebrow eyebrow--gold">Muestras sectoriales</span>
+    <p>Explora las versiones por industria: legal, salud privada, restaurantes e inmobiliaria.</p>
+  </div>
+
+  <div class="portfolio-marquee" aria-label="Carrusel de páginas sectoriales">
+    <div class="portfolio-track">
+      <a class="portfolio-mockup" href="legal/" aria-label="Ver página para firmas legales">
+        <img src="imagenes/Lexusai.png" alt="Mockup de página y chatbot para firmas legales premium" loading="lazy" />
+        <span>Legal</span>
+      </a>
+      <a class="portfolio-mockup" href="salud/" aria-label="Ver página para salud privada">
+        <img src="imagenes/mediaim.png" alt="Mockup de agenda y chatbot para clínicas privadas" loading="lazy" />
+        <span>Salud</span>
+      </a>
+      <a class="portfolio-mockup" href="restaurantes/" aria-label="Ver página para restaurantes">
+        <img src="imagenes/reservaai.png" alt="Mockup de reservas automatizadas para restaurantes premium" loading="lazy" />
+        <span>Restaurantes</span>
+      </a>
+      <a class="portfolio-mockup" href="inmobiliaria/" aria-label="Ver página para inmobiliaria">
+        <img src="imagenes/vantage.png" alt="Mockup de captación para proyectos inmobiliarios premium" loading="lazy" />
+        <span>Inmobiliaria</span>
+      </a>
+      <div class="portfolio-mockup" aria-hidden="true">
+        <img src="imagenes/Lexusai.png" alt="" loading="lazy" />
+        <span>Legal</span>
+      </div>
+      <div class="portfolio-mockup" aria-hidden="true">
+        <img src="imagenes/mediaim.png" alt="" loading="lazy" />
+        <span>Salud</span>
+      </div>
+      <div class="portfolio-mockup" aria-hidden="true">
+        <img src="imagenes/reservaai.png" alt="" loading="lazy" />
+        <span>Restaurantes</span>
+      </div>
+      <div class="portfolio-mockup" aria-hidden="true">
+        <img src="imagenes/vantage.png" alt="" loading="lazy" />
+        <span>Inmobiliaria</span>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- ============ PROBLEMA / COSTO ============ -->
 <section class="problem sec-pad" id="problema" data-screen-label="03 Problema">
   <div class="wrap">
@@ -264,7 +309,7 @@ const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
       </div>
       <div>
         <div class="big-num num-tab" id="costTotal">0</div>
-        <small>Clientes ficticios · resultados propios se medirán desde el primer lanzamiento</small>
+        <small>Muestra demo · medición real desde el primer lanzamiento</small>
       </div>
     </div>
   </div>
@@ -536,12 +581,47 @@ const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
   </div>
 </section>
 
+<!-- ============ SYSTEM REBOOT SCROLLYTELLING ============ -->
+<section class="transformation-reveal system-reboot" id="transformacion" data-screen-label="07 Transformacion" data-system-reboot>
+  <div class="system-reboot__sticky">
+    <div class="system-reboot__glow" aria-hidden="true"></div>
+
+    <div class="system-reboot__media" aria-label="Secuencia demo de transformación de sistema legacy a dashboard de IA premium">
+      <figure class="system-reboot__layer legacy-ui" aria-hidden="true">
+        <img src="imagenes/antes.png" alt="" loading="lazy" decoding="async" />
+        <figcaption>LegacyCorp · Sistema heredado</figcaption>
+      </figure>
+      <figure class="system-reboot__layer premium-ui">
+        <img src="imagenes/despues.png" alt="Dashboard premium de IA con interfaz ejecutiva y datos organizados" loading="lazy" decoding="async" />
+        <figcaption>NEXORA · Dashboard de IA premium</figcaption>
+      </figure>
+    </div>
+
+    <div class="system-reboot__copy" aria-live="polite">
+      <p class="system-reboot__line system-reboot__line--legacy">Demasiadas empresas operan en el caos.</p>
+      <p class="system-reboot__line system-reboot__line--shutdown">Apagamos la ineficiencia...</p>
+      <p class="system-reboot__line system-reboot__line--boot">...y encendemos tu verdadera capacidad operativa.</p>
+      <div class="system-reboot__line system-reboot__line--final">
+        <strong>El Nuevo Estándar.</strong>
+        <a href="#auditoria" class="btn btn--gold">Agendar Consulta Confidencial <span class="arr">→</span></a>
+      </div>
+    </div>
+
+    <div class="system-reboot__phase" aria-hidden="true">
+      <span>Legacy</span>
+      <span>Shutdown</span>
+      <span>Boot</span>
+      <span>NEXORA</span>
+    </div>
+  </div>
+</section>
+
 <!-- ============ PROCESO ============ -->
-<section class="process sec-pad" id="proceso" data-screen-label="07 Proceso">
+<section class="process sec-pad" id="proceso" data-screen-label="08 Proceso">
   <div class="wrap">
     <div class="section-head">
       <div data-reveal>
-        <span class="eyebrow">05 / Proceso</span>
+        <span class="eyebrow">06 / Proceso</span>
         <h2 class="h-1">Catorce días. Cuatro etapas. Cero improvisación.</h2>
       </div>
       <p class="lede" data-reveal>
@@ -579,11 +659,11 @@ const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
 </section>
 
 <!-- ============ FAQ / OBJECIONES ============ -->
-<section class="faq sec-pad" data-screen-label="08 Objeciones">
+<section class="faq sec-pad" data-screen-label="09 Objeciones">
   <div class="wrap">
     <div class="faq-grid">
       <div data-reveal>
-        <span class="eyebrow">06 / Preguntas</span>
+        <span class="eyebrow">07 / Preguntas</span>
         <h2 class="h-1 section-title-offset">Lo que todo cliente<br/>nos pregunta primero.</h2>
         <p class="lede faq-intro">
           Respondemos directo. Si tu pregunta no está aquí, la consulta gratuita es el mejor lugar para resolverla.
@@ -622,10 +702,10 @@ const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
 </section>
 
 <!-- ============ CTA / FORM ============ -->
-<section class="cta sec-pad" id="auditoria" data-screen-label="09 CTA Form">
+<section class="cta sec-pad" id="auditoria" data-screen-label="10 CTA Form">
   <div class="wrap cta-layout">
     <div class="cta-copy">
-      <span class="eyebrow eyebrow--gold" data-reveal>07 / CONSULTA GRATUITA</span>
+      <span class="eyebrow eyebrow--gold" data-reveal>08 / CONSULTA GRATUITA</span>
       <h2 data-reveal class="cta-title">
         Descubre exactamente<br/>
         <em>cuánto está costando</em><br/>
@@ -759,7 +839,7 @@ const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
   <div class="wrap">
     <div class="footer-grid">
       <div class="foot-brand">
-        <a href="#" class="logo">
+        <a href="./" class="logo">
           <span class="logo-mark" aria-hidden="true">
             <i class="on"><span>S</span></i><i></i><i class="gold"><span>P</span></i>
             <i></i><i><span>·</span></i><i></i>
@@ -781,10 +861,10 @@ const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
       <div class="foot-col">
         <h5>Industrias</h5>
         <ul>
-          <li><a href="#industrias">Salud privada</a></li>
-          <li><a href="#industrias">Inmobiliaria</a></li>
-          <li><a href="#industrias">Legal</a></li>
-          <li><a href="#industrias">Restaurantes</a></li>
+          <li><a href="salud/">Salud privada</a></li>
+          <li><a href="inmobiliaria/">Inmobiliaria</a></li>
+          <li><a href="legal/">Legal</a></li>
+          <li><a href="restaurantes/">Restaurantes</a></li>
         </ul>
       </div>
       <div class="foot-col">
@@ -792,7 +872,7 @@ const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
         <ul>
           <li><a href="#auditoria">Consulta gratuita</a></li>
           <li><a href="mailto:hola@spmadvisory.mx">hola@spmadvisory.mx</a></li>
-          <li><a href="#">CDMX · Monterrey · Austin</a></li>
+          <li><span>CDMX · Monterrey · Austin</span></li>
         </ul>
       </div>
     </div>
@@ -855,7 +935,7 @@ const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
 
 <!-- Cookie Consent -->
 <div class="cookie-banner" id="cookieBanner" role="dialog" aria-label="Aviso de privacidad" aria-live="polite">
-  <p>Usamos cookies de analytics para mejorar la experiencia. <a href="#" class="cookie-link">Aviso de privacidad</a>.</p>
+  <p>Usamos cookies de analytics para mejorar la experiencia. <span class="cookie-link">Aviso de privacidad</span>.</p>
   <div class="cookie-actions">
     <button class="btn btn--ghost cookie-btn" id="cookieDecline">Solo esenciales</button>
     <button class="btn btn--gold cookie-btn" id="cookieAccept">Aceptar</button>

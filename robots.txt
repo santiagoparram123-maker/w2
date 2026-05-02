@@ -4,11 +4,10 @@ Disallow: /AGENTS.md
 Disallow: /CLAUDE.md
 Disallow: /docs/
 Disallow: /WEP/
+Disallow: /_dev/
 Disallow: /.claude/
 Disallow: /.superpowers/
 Disallow: /.obsidian/
 Disallow: /.design-ref/
-Disallow: /design-canvas.jsx
-Disallow: /spm-logo.html
 
 Sitemap: https://spminvestor.shop/sitemap.xml
