@@ -37,17 +37,6 @@
 Reemplazar el contenido actual de `CLAUDE.md` con:
 
 ```markdown
-## graphify
-
-This project has a graphify knowledge graph at graphify-out/.
-
-Rules:
-- Before answering architecture or codebase questions, read graphify-out/GRAPH_REPORT.md for god nodes and community structure
-- If graphify-out/wiki/index.md exists, navigate it instead of reading raw files
-- After modifying code files in this session, run `graphify update .` to keep the graph current (AST-only, no API cost)
-
----
-
 ## CLAUDE.md — Directrices de Diseño y Arquitectura Premium
 
 ### Visión del Proyecto
@@ -96,7 +85,7 @@ Plataforma web de alto estándar ($10k USD). Herramienta operativa orientada a l
 ```bash
 head -5 CLAUDE.md
 ```
-Expected: `## graphify`
+Expected: `## CLAUDE.md — Directrices de Diseño y Arquitectura Premium`
 
 - [ ] **Step 3: Commit**
 

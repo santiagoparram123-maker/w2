@@ -100,15 +100,13 @@ Reglas:
 ## Flujo de trabajo para Codex
 
 1. Antes de editar, inspecciona `index.html`, `styles.css`, `app.js` y cualquier archivo relevante.
-2. Si existe `graphify-out/wiki/index.md`, úsalo para entender arquitectura; si existe `graphify-out/GRAPH_REPORT.md`, léelo antes de responder preguntas de arquitectura.
-3. Haz cambios enfocados y revisables.
-4. No borres trabajo del usuario ni reviertas cambios ajenos.
-5. Usa `apply_patch` para ediciones manuales.
-6. Ejecuta verificaciones disponibles. Para este proyecto estático, como mínimo:
+2. Haz cambios enfocados y revisables.
+3. No borres trabajo del usuario ni reviertas cambios ajenos.
+4. Usa `apply_patch` para ediciones manuales.
+5. Ejecuta verificaciones disponibles. Para este proyecto estático, como mínimo:
    - `node --check app.js`
    - búsquedas de control para `style="`, SVG decorativos sin `aria-hidden`, claims falsos y JSON-LD inconsistente.
-7. Si `graphify` está instalado y existe `graphify-out`, después de modificar código ejecuta `graphify update .`.
-8. Resume qué cambió y qué no se pudo verificar.
+6. Resume qué cambió y qué no se pudo verificar.
 
 ## Comandos útiles
 

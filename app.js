@@ -101,10 +101,305 @@
     });
   }
 
+  function initRealEstateFunnel() {
+    const funnel = document.querySelector('[data-real-estate-funnel]');
+    if (!funnel) return;
+
+    const stages = Array.from(funnel.querySelectorAll('[data-funnel-stage]'));
+    const numbers = Array.from(funnel.querySelectorAll('[data-funnel-number]'));
+    if (!stages.length || !numbers.length) return;
+
+    const setNumber = (el, value) => {
+      el.textContent = Math.round(value).toLocaleString('es-CO');
+    };
+
+    function countWithRaf(el, target, duration, delay = 0) {
+      window.setTimeout(() => {
+        const start = performance.now();
+        function step(now) {
+          const t = Math.min(1, (now - start) / duration);
+          const eased = 1 - Math.pow(1 - t, 3);
+          setNumber(el, target * eased);
+          if (t < 1) requestAnimationFrame(step);
+        }
+        requestAnimationFrame(step);
+      }, delay);
+    }
+
+    stages.forEach((stage) => {
+      stage.style.opacity = '0';
+      stage.style.transform = 'translateY(18px)';
+    });
+    numbers.forEach((number) => setNumber(number, 0));
+
+    if (prefersReducedMotion) {
+      stages.forEach((stage) => {
+        stage.style.opacity = '1';
+        stage.style.transform = 'none';
+      });
+      numbers.forEach((number) => setNumber(number, Number(number.closest('[data-funnel-stage]')?.dataset.target || 0)));
+      return;
+    }
+
+    if (window.gsap) {
+      const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+      stages.forEach((stage, index) => {
+        const number = stage.querySelector('[data-funnel-number]');
+        const target = Number(stage.dataset.target || 0);
+        const state = { value: 0 };
+
+        tl.to(stage, {
+          autoAlpha: 1,
+          y: 0,
+          duration: 0.72
+        }, index * 0.2);
+
+        tl.to(state, {
+          value: target,
+          duration: 0.82,
+          ease: 'power2.out',
+          onUpdate: () => setNumber(number, state.value)
+        }, index * 0.2 + 0.12);
+      });
+      return;
+    }
+
+    stages.forEach((stage, index) => {
+      window.setTimeout(() => {
+        stage.style.transition = 'opacity 620ms cubic-bezier(.2,.8,.2,1), transform 620ms cubic-bezier(.2,.8,.2,1)';
+        stage.style.opacity = '1';
+        stage.style.transform = 'translateY(0)';
+      }, index * 160);
+      const number = stage.querySelector('[data-funnel-number]');
+      countWithRaf(number, Number(stage.dataset.target || 0), 780, index * 160 + 120);
+    });
+  }
+
+  function initHealthcareAgenda() {
+    const agenda = document.querySelector('.hero--healthcare [data-healthcare-agenda]');
+    if (!agenda) return;
+
+    const slots = Array.from(agenda.querySelectorAll('[data-agenda-slot]'));
+    if (!slots.length) return;
+
+    const revealSlot = (slot) => {
+      slot.classList.add('is-confirmed');
+      slot.style.setProperty('--slot-glow', '1');
+      const pill = slot.querySelector('[data-agenda-pill]');
+      if (pill) {
+        pill.style.opacity = '1';
+        pill.style.transform = 'none';
+      }
+    };
+
+    slots.forEach((slot) => {
+      slot.classList.remove('is-confirmed');
+      slot.style.setProperty('--slot-glow', '0');
+      const pill = slot.querySelector('[data-agenda-pill]');
+      if (pill) {
+        pill.style.opacity = '0';
+        pill.style.transform = 'translateY(8px) scale(0.96)';
+      }
+    });
+
+    if (prefersReducedMotion) {
+      slots.forEach(revealSlot);
+      return;
+    }
+
+    if (window.gsap) {
+      const tl = gsap.timeline({
+        defaults: { ease: 'power3.out' },
+        delay: 0.18
+      });
+
+      slots.forEach((slot, index) => {
+        const pill = slot.querySelector('[data-agenda-pill]');
+        const start = index * 0.42;
+
+        tl.add(() => slot.classList.add('is-confirmed'), start);
+        tl.to(slot, {
+          '--slot-glow': 1,
+          duration: 0.48
+        }, start);
+
+        if (pill) {
+          tl.to(pill, {
+            autoAlpha: 1,
+            y: 0,
+            scale: 1,
+            duration: 0.38
+          }, start + 0.14);
+        }
+      });
+      return;
+    }
+
+    slots.forEach((slot, index) => {
+      window.setTimeout(() => revealSlot(slot), index * 360 + 180);
+    });
+  }
+
+  function initLegalCapture() {
+    const capture = document.querySelector('.hero--legal [data-legal-capture]');
+    if (!capture) return;
+
+    const fields = Array.from(capture.querySelectorAll('[data-legal-scramble]'));
+    if (!fields.length) return;
+
+    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789#@$%&';
+    const randomChar = () => chars[Math.floor(Math.random() * chars.length)];
+    const scrambleFor = (text) => text.split('').map((char) => char === ' ' ? ' ' : randomChar()).join('');
+
+    const renderProgress = (el, finalText, progress) => {
+      const resolvedCount = Math.floor(finalText.length * progress);
+      el.textContent = finalText.split('').map((char, index) => {
+        if (char === ' ') return ' ';
+        return index < resolvedCount ? char : randomChar();
+      }).join('');
+    };
+
+    fields.forEach((field) => {
+      const finalText = field.dataset.resolved || field.textContent.trim();
+      field.textContent = scrambleFor(finalText);
+    });
+
+    if (prefersReducedMotion) {
+      fields.forEach((field) => {
+        field.textContent = field.dataset.resolved || field.textContent.trim();
+      });
+      capture.classList.add('is-decrypted');
+      return;
+    }
+
+    if (window.gsap) {
+      const tl = gsap.timeline({
+        defaults: { ease: 'power2.out' },
+        delay: 0.2,
+        onComplete: () => capture.classList.add('is-decrypted')
+      });
+
+      fields.forEach((field, index) => {
+        const finalText = field.dataset.resolved || field.textContent.trim();
+        const state = { progress: 0 };
+
+        tl.to(state, {
+          progress: 1,
+          duration: index === 0 ? 0.95 : 0.72,
+          onUpdate: () => renderProgress(field, finalText, state.progress),
+          onComplete: () => {
+            field.textContent = finalText;
+          }
+        }, index * 0.24);
+      });
+      return;
+    }
+
+    fields.forEach((field, index) => {
+      const finalText = field.dataset.resolved || field.textContent.trim();
+      const duration = index === 0 ? 900 : 680;
+      const delay = index * 220 + 180;
+
+      window.setTimeout(() => {
+        const start = performance.now();
+        function step(now) {
+          const t = Math.min(1, (now - start) / duration);
+          const eased = 1 - Math.pow(1 - t, 3);
+          renderProgress(field, finalText, eased);
+          if (t < 1) {
+            requestAnimationFrame(step);
+          } else {
+            field.textContent = finalText;
+            if (index === fields.length - 1) capture.classList.add('is-decrypted');
+          }
+        }
+        requestAnimationFrame(step);
+      }, delay);
+    });
+  }
+
+  function initRestaurantFeed() {
+    const feed = document.querySelector('.hero--restaurant [data-restaurant-feed]');
+    if (!feed) return;
+
+    const cards = Array.from(feed.querySelectorAll('[data-reservation-card]'));
+    const meter = feed.querySelector('[data-hostess-meter]');
+    if (!cards.length || !meter) return;
+
+    const assistedTarget = 72;
+    const setMeter = (value) => {
+      meter.textContent = Math.round(value).toLocaleString('es-CO');
+    };
+
+    cards.forEach((card) => {
+      card.style.opacity = '0';
+      card.style.transform = 'translateY(34px) scale(0.985)';
+    });
+    setMeter(0);
+
+    if (prefersReducedMotion) {
+      cards.forEach((card) => {
+        card.style.opacity = '1';
+        card.style.transform = 'none';
+      });
+      setMeter(assistedTarget);
+      return;
+    }
+
+    if (window.gsap) {
+      const state = { value: 0 };
+      const tl = gsap.timeline({ defaults: { ease: 'power3.out' }, delay: 0.12 });
+
+      tl.to(cards, {
+        autoAlpha: 1,
+        y: 0,
+        scale: 1,
+        duration: 0.46,
+        stagger: 0.105
+      });
+
+      tl.to(state, {
+        value: assistedTarget,
+        duration: 0.82,
+        ease: 'power2.out',
+        onUpdate: () => setMeter(state.value),
+        onComplete: () => setMeter(assistedTarget)
+      }, 0.08);
+      return;
+    }
+
+    cards.forEach((card, index) => {
+      window.setTimeout(() => {
+        card.style.transition = 'opacity 360ms cubic-bezier(.2,.8,.2,1), transform 360ms cubic-bezier(.2,.8,.2,1)';
+        card.style.opacity = '1';
+        card.style.transform = 'translateY(0) scale(1)';
+      }, index * 100 + 120);
+    });
+
+    const start = performance.now();
+    function step(now) {
+      const t = Math.min(1, (now - start) / 820);
+      const eased = 1 - Math.pow(1 - t, 3);
+      setMeter(assistedTarget * eased);
+      if (t < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+
   if (document.readyState === 'complete' || document.readyState === 'interactive') {
     requestAnimationFrame(initGsapMotion);
+    requestAnimationFrame(initRealEstateFunnel);
+    requestAnimationFrame(initHealthcareAgenda);
+    requestAnimationFrame(initLegalCapture);
+    requestAnimationFrame(initRestaurantFeed);
   } else {
-    window.addEventListener('DOMContentLoaded', () => requestAnimationFrame(initGsapMotion));
+    window.addEventListener('DOMContentLoaded', () => {
+      requestAnimationFrame(initGsapMotion);
+      requestAnimationFrame(initRealEstateFunnel);
+      requestAnimationFrame(initHealthcareAgenda);
+      requestAnimationFrame(initLegalCapture);
+      requestAnimationFrame(initRestaurantFeed);
+    });
   }
 
   // ---------- MOBILE NAV ----------
@@ -155,11 +450,11 @@
   // ---------- HERO METRIC + SPARKLINE ----------
   const metricConfigs = {
     recovered: {
-      label: 'Entrega pactada · primer lanzamiento',
+      label: 'Entrega objetivo documentada',
       value: 14,
       suffix: 'd',
       delta: 0,
-      points: [28, 25, 22, 20, 18, 16, 15, 14, 14, 14, 14]
+      points: [1, 2, 3, 4, 6, 8, 11, 15, 20, 27, 36]
     },
     calls: {
       label: 'Sectores con estructura preparada',
@@ -169,14 +464,14 @@
       points: [1, 1, 2, 2, 3, 3, 4, 4, 4, 4, 4]
     },
     hours: {
-      label: 'Revisiones incluidas hasta aprobación',
+      label: 'Medición de conversión preparada',
       value: 100,
       suffix: '%',
       delta: 0,
       points: [40, 48, 56, 64, 72, 80, 88, 94, 98, 100, 100]
     },
     roi: {
-      label: 'Clientes ficticios usados como prueba',
+      label: 'Métricas inventadas usadas como prueba',
       value: 0,
       suffix: '',
       delta: 0,
@@ -190,6 +485,7 @@
   const sparkLine = document.getElementById('sparkLine');
   const sparkArea = document.getElementById('sparkArea');
   const sparkDot = document.getElementById('sparkDot');
+  const hasMetricPanel = !!(mpValueEl && mpLabelEl && mpDeltaEl && sparkLine && sparkArea && sparkDot);
 
   function lerp(a, b, t) { return a + (b - a) * t; }
   function easeOut(t) { return 1 - Math.pow(1 - t, 3); }
@@ -205,69 +501,150 @@
     requestAnimationFrame(step);
   }
 
+  function animateMetricNumber(el, to, duration, decimals = 0, suffix = '') {
+    if (!el) return;
+    if (window.gsap && !prefersReducedMotion) {
+      const isPrimarySla = el.id === 'mpValue' && to === 14 && !decimals;
+      const format = (value) => decimals ? value.toFixed(decimals) : Math.round(value).toLocaleString('en-US');
+
+      if (isPrimarySla) {
+        const tl = gsap.timeline();
+        const scramble = { frame: 0 };
+        tl.to(scramble, {
+          frame: 1,
+          duration: 0.5,
+          ease: 'none',
+          onUpdate: () => {
+            el.textContent = String(Math.floor(Math.random() * 90) + 10).padStart(2, '0');
+          }
+        });
+        tl.fromTo({ value: 3 }, {
+          value: 3
+        }, {
+          value: to,
+          duration: Math.max(0.45, (duration / 1000) - 0.5),
+          ease: 'power2.out',
+          onUpdate() {
+            el.textContent = String(Math.round(this.targets()[0].value)).padStart(2, '0');
+          },
+          onComplete: () => {
+            el.textContent = String(to).padStart(2, '0');
+          }
+        });
+        return;
+      }
+
+      const state = { value: 0 };
+      gsap.to(state, {
+        value: to,
+        duration: duration / 1000,
+        ease: 'power2.out',
+        onUpdate: () => {
+          el.textContent = format(state.value) + suffix;
+        },
+        onComplete: () => {
+          el.textContent = format(Number(to)) + suffix;
+        }
+      });
+      return;
+    }
+    animateNumber(el, 0, to, duration, decimals, suffix);
+  }
+
   function drawSpark(points, animate = true) {
-    const W = 600, H = 120, pad = 6;
-    const min = Math.min(...points);
-    const max = Math.max(...points);
-    const range = max - min || 1;
-    const coords = points.map((p, i) => {
-      const x = pad + (i / (points.length - 1)) * (W - pad * 2);
-      const y = H - pad - ((p - min) / range) * (H - pad * 2);
-      return [x, y];
-    });
-    const linePath = coords.map((c, i) => (i ? 'L' : 'M') + c[0].toFixed(1) + ' ' + c[1].toFixed(1)).join(' ');
+    const W = 640, H = 120, pad = 24;
+    const start = [pad, H - 24];
+    const peak = [W - pad, 14];
+    const linePath = [
+      `M${start[0]} ${start[1]}`,
+      `C 118 ${start[1]}, 166 94, 220 88`,
+      `C 326 76, 430 55, 516 32`,
+      `C 558 21, 588 17, ${peak[0]} ${peak[1]}`
+    ].join(' ');
     const areaPath = linePath + ` L ${W - pad} ${H} L ${pad} ${H} Z`;
 
     sparkLine.setAttribute('d', linePath);
     sparkArea.setAttribute('d', areaPath);
-    const last = coords[coords.length - 1];
-    sparkDot.setAttribute('cx', last[0]);
-    sparkDot.setAttribute('cy', last[1]);
+    sparkDot.setAttribute('cx', peak[0]);
+    sparkDot.setAttribute('cy', peak[1]);
 
     if (animate) {
       const len = sparkLine.getTotalLength();
       sparkLine.style.strokeDasharray = len;
       sparkLine.style.strokeDashoffset = len;
-      sparkLine.style.transition = 'none';
-      // force
-      sparkLine.getBoundingClientRect();
-      sparkLine.style.transition = 'stroke-dashoffset 1600ms cubic-bezier(.2,.7,.2,1)';
-      sparkLine.style.strokeDashoffset = 0;
-
       sparkArea.style.opacity = 0;
-      sparkArea.style.transition = 'opacity 1800ms ease 400ms';
-      requestAnimationFrame(() => sparkArea.style.opacity = 1);
-
       sparkDot.style.opacity = 0;
-      sparkDot.style.transition = 'opacity 400ms ease 1400ms';
-      requestAnimationFrame(() => sparkDot.style.opacity = 1);
+
+      if (window.gsap && !prefersReducedMotion) {
+        gsap.to(sparkLine, {
+          strokeDashoffset: 0,
+          duration: 1.65,
+          ease: 'power2.in'
+        });
+        gsap.to(sparkArea, {
+          opacity: 1,
+          duration: 0.8,
+          delay: 0.45,
+          ease: 'power2.out'
+        });
+        gsap.to(sparkDot, {
+          opacity: 1,
+          duration: 0.32,
+          delay: 1.35,
+          ease: 'power2.out'
+        });
+      } else {
+        sparkLine.style.transition = 'none';
+        sparkLine.getBoundingClientRect();
+        sparkLine.style.transition = 'stroke-dashoffset 1600ms cubic-bezier(.2,.7,.2,1)';
+        sparkLine.style.strokeDashoffset = 0;
+        sparkArea.style.opacity = 1;
+        sparkDot.style.opacity = 1;
+      }
     }
   }
 
   let currentMetric = 'recovered';
   function setMetric(key) {
+    if (!hasMetricPanel) return;
     const c = metricConfigs[key];
     if (!c) return;
     currentMetric = key;
     mpLabelEl.textContent = c.label;
     const dec = c.suffix === '×' ? 1 : 0;
-    animateNumber(mpValueEl, 0, c.value, 1400, dec);
     // swap suffix
     const pct = document.querySelector('.mp-value .pct');
-    if (pct) pct.textContent = c.suffix || '';
-    animateNumber(mpDeltaEl, 0, c.delta, 1200, 1, '');
+    if (pct) pct.textContent = c.suffix === 'd' ? 'días' : (c.suffix || '');
+    animateMetricNumber(mpValueEl, c.value, 1250, dec);
+    animateMetricNumber(mpDeltaEl, c.delta, 900, 0, '');
     drawSpark(c.points, true);
   }
 
-  // Kick off hero metric once hero visible (immediately; hero is above fold)
-  setTimeout(() => setMetric('recovered'), 400);
+  // Kick off hero telemetry once the panel enters the viewport.
+  if (hasMetricPanel) {
+    if (window.gsap && window.ScrollTrigger && !prefersReducedMotion) {
+      gsap.registerPlugin(ScrollTrigger);
+      ScrollTrigger.create({
+        trigger: '.metric-panel',
+        start: 'top 84%',
+        once: true,
+        onEnter: () => setMetric('recovered')
+      });
+    } else {
+      setTimeout(() => setMetric('recovered'), 400);
+    }
+  }
+
+  document.querySelectorAll('.metric-panel').forEach((panel) => {
+    panel.addEventListener('pointermove', (e) => {
+      const r = panel.getBoundingClientRect();
+      panel.style.setProperty('--mx', ((e.clientX - r.left) / r.width) * 100 + '%');
+      panel.style.setProperty('--my', ((e.clientY - r.top) / r.height) * 100 + '%');
+    });
+  });
 
   // ---------- TICKER ----------
-  const tickerTargets = [
-    { el: document.getElementById('tk1'), to: 1, dec: 0 },
-    { el: document.getElementById('tk2'), to: 4, dec: 0 },
-    { el: document.getElementById('tk3'), to: 14, dec: 0 }
-  ];
+  const tickerTargets = [];
   setTimeout(() => {
     tickerTargets.forEach((t) => {
       if (t.el) animateNumber(t.el, 0, t.to, 1800, t.dec);
@@ -336,9 +713,13 @@
     btn.addEventListener('click', () => {
       const open = item.classList.contains('open');
       document.querySelectorAll('[data-faq].open').forEach((el) => {
-        if (el !== item) el.classList.remove('open');
+        if (el !== item) {
+          el.classList.remove('open');
+          el.querySelector('.faq-q')?.setAttribute('aria-expanded', 'false');
+        }
       });
       item.classList.toggle('open', !open);
+      btn.setAttribute('aria-expanded', String(!open));
     });
   });
 
@@ -360,6 +741,14 @@
   const formSuccess = document.getElementById('formSuccess');
   let stepIdx = 1;
 
+  function fieldErrorMessage(el) {
+    if (el.type === 'email') return 'Ingresa un email corporativo válido.';
+    if (el.type === 'tel') return 'Ingresa un WhatsApp válido con al menos 7 dígitos.';
+    if (el.tagName === 'SELECT') return 'Selecciona una opción para continuar.';
+    if (el.tagName === 'TEXTAREA') return 'Cuéntanos el problema principal para preparar la sesión.';
+    return 'Completa este campo para continuar.';
+  }
+
   function validate(container) {
     let ok = true;
     container.querySelectorAll('input, select, textarea').forEach((el) => {
@@ -372,13 +761,56 @@
       if (f) {
         f.classList.toggle('error', !valid);
         f.classList.toggle('valid', valid && el.type !== 'select-one');
+        el.setAttribute('aria-invalid', String(!valid));
+        let errorEl = f.querySelector('.field-error');
+        if (!valid) {
+          if (!errorEl) {
+            errorEl = document.createElement('span');
+            errorEl.className = 'field-error';
+            errorEl.id = `${el.id || el.name}-error`;
+            f.appendChild(errorEl);
+          }
+          errorEl.textContent = fieldErrorMessage(el);
+          el.setAttribute('aria-describedby', errorEl.id);
+        } else if (errorEl) {
+          errorEl.remove();
+          el.removeAttribute('aria-describedby');
+        }
       }
       if (!valid) ok = false;
     });
     return ok;
   }
 
-  form.addEventListener('submit', async (e) => {
+  function isPlaceholderFormspree(action) {
+    return !action || action.includes('FORMSPREE_ID_AQUI');
+  }
+
+  function buildWhatsAppLeadUrl(formEl) {
+    const data = new FormData(formEl);
+    const get = (name) => String(data.get(name) || '').trim();
+    const subject = get('_subject') || 'Solicitud SPM Advisory';
+    const sector = get('sector') || get('industry') || 'General';
+    const lines = [
+      'Hola, quiero solicitar una auditoría con SPM Advisory.',
+      '',
+      `Origen: ${subject}`,
+      `Nombre: ${get('name')}`,
+      `Empresa: ${get('company')}`,
+      `Email: ${get('email')}`,
+      `WhatsApp: ${get('phone')}`,
+      `Sector: ${sector}`,
+      `Proyecto: ${get('size')}`,
+      get('preferred_time') ? `Franja preferida: ${get('preferred_time')}` : '',
+      '',
+      `Problema principal: ${get('problem')}`
+    ].filter(Boolean);
+
+    return `https://wa.me/573181294470?text=${encodeURIComponent(lines.join('\n'))}`;
+  }
+
+  if (form && step1 && step2 && formBtn && formStepLabel && formSuccess) {
+    form.addEventListener('submit', async (e) => {
     e.preventDefault();
     if (stepIdx === 1) {
       if (!validate(step1)) return;
@@ -392,6 +824,13 @@
     if (!validate(step2)) return;
     formBtn.disabled = true;
     formBtn.innerHTML = 'Enviando... <span class="arr">→</span>';
+    if (isPlaceholderFormspree(form.action)) {
+      window.open(buildWhatsAppLeadUrl(form), '_blank', 'noopener,noreferrer');
+      form.style.display = 'none';
+      formSuccess.classList.add('show');
+      formStepLabel.textContent = 'WhatsApp';
+      return;
+    }
     try {
       const res = await fetch(form.action, {
         method: 'POST',
@@ -413,12 +852,19 @@
       formBtn.innerHTML = 'Reintentar <span class="arr">→</span>';
       alert('Error de red. Contáctanos por WhatsApp: +57 318 1294470');
     }
-  });
+    });
+  }
 
+  const preferredTime = document.getElementById('f-time');
   document.querySelectorAll('#timeSlots [data-slot]').forEach((p) => {
     p.addEventListener('click', () => {
-      document.querySelectorAll('#timeSlots [data-slot]').forEach((x) => x.classList.remove('on'));
+      document.querySelectorAll('#timeSlots [data-slot]').forEach((x) => {
+        x.classList.remove('on');
+        x.setAttribute('aria-pressed', 'false');
+      });
       p.classList.add('on');
+      p.setAttribute('aria-pressed', 'true');
+      if (preferredTime) preferredTime.value = p.textContent.trim();
     });
   });
 
@@ -443,33 +889,36 @@
     document.querySelectorAll('#twSwatches .tw-swatch').forEach((s) => {
       s.classList.toggle('on', s.dataset.accent === name);
     });
-    // Recolor sparkline
-    sparkLine.setAttribute('stroke', c.a);
-    sparkDot.setAttribute('fill', c.a);
-    document.querySelector('#sparkGrad stop:first-child').setAttribute('stop-color', c.a);
-    document.querySelector('#sparkGrad stop:last-child').setAttribute('stop-color', c.a);
+    if (hasMetricPanel) {
+      sparkLine.setAttribute('stroke', c.a);
+      sparkDot.setAttribute('fill', c.a);
+      document.querySelector('#sparkGrad stop:first-child')?.setAttribute('stop-color', c.a);
+      document.querySelector('#sparkGrad stop:last-child')?.setAttribute('stop-color', c.a);
+    }
   }
 
   const heroVariants = {
     A: {
-      h: 'Diseñamos la web que hace que tus clientes digan: <em>"¿quién les hizo eso?"</em>',
-      s: 'Interfaces premium que convierten visitas en clientes. Chatbots que capturan leads a las 2am. Entregado en 14 días — no en meses — con revisiones incluidas.'
+      h: 'Web premium + chatbot para vender en 14 días',
+      s: 'Creamos una landing B2B con identidad visual, copy de conversión y chatbot para capturar prospectos por web y WhatsApp desde el primer lanzamiento.'
     },
     B: {
-      h: 'Tu web actual cuesta ventas. <em>La nueva las genera sola.</em>',
-      s: 'Diseño UI/UX de alto estándar que posiciona tu marca como líder antes de que el prospecto lea una sola palabra. Lanzamos en 14 días, con garantía de revisiones ilimitadas.'
+      h: 'Landing premium, chatbot y medición listos para lanzar',
+      s: 'Diseñamos el flujo de conversión, implementamos el sitio y dejamos eventos preparados para medir formularios, WhatsApp y oportunidades desde el día uno.'
     },
     C: {
-      h: 'Tu primera web seria puede ser <em>la prueba de tu calidad.</em>',
-      s: 'Construimos una presencia premium que muestra autoridad desde el primer clic: diseño, copy, chatbot y medición listos para empezar a vender sin inventar trayectoria.'
+      h: 'Una presencia digital seria para negocios que venden confianza',
+      s: 'Sistema visual y comercial para dueños, socios y equipos comerciales: mensaje claro, diseño premium, captura de leads y handoff documentado.'
     }
   };
 
   function applyHeroVariant(key) {
     const v = heroVariants[key];
     if (!v) return;
-    document.getElementById('heroHeadline').innerHTML = v.h;
-    document.getElementById('heroSub').innerHTML = v.s;
+    const heroHeadline = document.getElementById('heroHeadline');
+    const heroSub = document.getElementById('heroSub');
+    if (heroHeadline) heroHeadline.innerHTML = v.h;
+    if (heroSub) heroSub.innerHTML = v.s;
     document.querySelectorAll('#twHero .tw-pill').forEach((p) => {
       p.classList.toggle('on', p.dataset.hero === key);
     });
@@ -510,26 +959,27 @@
     } catch (e) {}
   }
 
-  // Apply initial tweak state
-  applyAccent(tweakState.accent || 'gold');
-  applyHeroVariant(tweakState.heroVariant || 'A');
-  // metric already initialized; override if tweak says something else
-  if (tweakState.heroMetric && tweakState.heroMetric !== 'recovered') {
-    setTimeout(() => applyMetric(tweakState.heroMetric), 500);
+  // Apply initial tweak state when the edit panel exists.
+  if (panel) {
+    applyAccent(tweakState.accent || 'gold');
+    applyHeroVariant(tweakState.heroVariant || 'A');
+    if (tweakState.heroMetric && tweakState.heroMetric !== 'recovered') {
+      setTimeout(() => applyMetric(tweakState.heroMetric), 500);
+    }
   }
 
   // ---------- GA4 EVENTS ----------
   function trackEvent(name, params) {
     if (window.gtag) gtag('event', name, params);
   }
-  document.querySelectorAll('a[href="#auditoria"]').forEach((el) => {
+  document.querySelectorAll('a[href^="#auditoria"]').forEach((el) => {
     el.addEventListener('click', () => {
       trackEvent('cta_click', { cta_location: el.closest('[data-screen-label]')?.dataset.screenLabel || 'unknown' });
     });
   });
   document.querySelectorAll('[data-faq]').forEach((item) => {
     item.querySelector('.faq-q').addEventListener('click', () => {
-      if (!item.classList.contains('open')) {
+      if (item.classList.contains('open')) {
         trackEvent('faq_open', { question: item.querySelector('.faq-q').textContent.trim().slice(0, 60) });
       }
     });
@@ -567,6 +1017,7 @@
   // Edit mode protocol
   window.addEventListener('message', (e) => {
     const d = e.data || {};
+    if (!panel) return;
     if (d.type === '__activate_edit_mode') panel.classList.add('show');
     if (d.type === '__deactivate_edit_mode') panel.classList.remove('show');
   });
